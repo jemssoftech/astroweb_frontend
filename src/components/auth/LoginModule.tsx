@@ -1,10 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import MobileInput from "./MobileInput";
 import OtpInput from "./OtpInput";
 
 export default function LoginModule() {
+  const router = useRouter();
   const [step, setStep] = useState<"mobile" | "otp">("mobile");
   const [mobileNumber, setMobileNumber] = useState("");
   const [loading, setLoading] = useState(false);
@@ -55,19 +58,59 @@ export default function LoginModule() {
         body: JSON.stringify(payload),
       });
       const data = await response.json();
-      console.log(data);
+      console.log(data?.data);
+      const userAuth = data;
+      if (userAuth.status === 1 || userAuth.data?.status === 1) {
+        // We now also receive the user tokens through data.userAuth from the proxy route
 
-      if (data.status === 1) {
-        // After successful verification, you would typically redirect or update global auth state
-        console.log("OTP Verified for", mobileNumber, "with OTP", otp);
-        alert("Login successful!");
-        // You might want to close a modal or redirect user here.
+        console.log("OTP Verified! User Auth Payload:", userAuth);
+        const payload = {
+          mobileNumber: userAuth?.data?.mobileNumber,
+          email: "admin@gmail.com",
+          role: "user",
+        };
+        try {
+          const response = await fetch("/api/user", {
+            method: "POST",
+            body: JSON.stringify(payload),
+          });
+          const data = await response.json();
+          console.log("User API Response:", data);
+
+          if (data.accessToken) {
+            // Store tokens in cookies
+            document.cookie = `accessToken=${data.accessToken}; path=/; max-age=7200; Secure; SameSite=Lax`;
+            if (data.refreshToken) {
+              document.cookie = `refreshToken=${data.refreshToken}; path=/; max-age=86400; Secure; SameSite=Lax`;
+            }
+            if (data.user) {
+              // Store user details in localStorage
+              localStorage.setItem("user", JSON.stringify(data.user));
+            }
+
+            toast.success(
+              data.message || userAuth.message || "Successfully logged in!",
+            );
+
+            // Redirect to home/dashboard
+            router.push("/");
+          } else if (data.error) {
+            toast.error(data.error);
+          } else {
+            toast.success(userAuth.message);
+          }
+        } catch (error) {
+          console.log(error);
+          toast.success(userAuth.message);
+        }
       } else {
-        alert(data.message || "Invalid OTP");
+        toast.error(
+          userAuth.message || userAuth.data?.message || "Invalid OTP",
+        );
       }
     } catch (error) {
       console.error(error);
-      alert("Something went wrong");
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -78,7 +121,7 @@ export default function LoginModule() {
     // Simulate resend API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
     setLoading(false);
-    alert("OTP Resent!");
+    toast.success("OTP Resent!");
   };
 
   const goBack = () => {

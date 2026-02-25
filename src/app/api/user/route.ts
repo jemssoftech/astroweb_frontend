@@ -4,8 +4,14 @@ import { decryptData } from "../../../utils/encryption";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+    if (!body.mobileNumber) {
+      return NextResponse.json(
+        { error: "Mobile number is required" },
+        { status: 400 },
+      );
+    }
     const baseUrl = process.env.AUTH_BASE_URL;
-    const response = await fetch(`${baseUrl}/api/auth.web/verify-otp`, {
+    const response = await fetch(`${baseUrl}/api/auth.web/user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,40 +31,6 @@ export async function POST(req: NextRequest) {
           const decryptedString = decryptData(data.encryptedData, data.iv);
           // Assuming the decrypted string is JSON, parse it back into an object
           data = JSON.parse(decryptedString);
-          console.log(data, "data");
-          if (data?.status === 1) {
-            const payload = {
-              mobileNumber: data?.mobileNumber || data?.data?.mobileNumber,
-              email: data?.email || data?.data?.email,
-            };
-            const userResponse = await fetch(`${baseUrl}/api/auth.web/user`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(payload),
-            });
-
-            const userContentType = userResponse.headers.get("content-type");
-            if (
-              userContentType &&
-              userContentType.includes("application/json")
-            ) {
-              let userData = await userResponse.json();
-
-              // The user endpoint might also return encrypted data
-              if (userData && userData.iv && userData.encryptedData) {
-                const decryptedUserStr = decryptData(
-                  userData.encryptedData,
-                  userData.iv,
-                );
-                userData = JSON.parse(decryptedUserStr);
-              }
-
-              // Attach the tokens and user to our main data object so the frontend can consume them
-              data.userAuth = userData;
-            }
-          }
         } catch (decryptErr) {
           console.error("Failed to decrypt API response:", decryptErr);
           // If we fail to decrypt, we might want to return a 500 error
@@ -79,11 +51,26 @@ export async function POST(req: NextRequest) {
       );
     }
     return NextResponse.json(data, { status: response.status });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Login API Error:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
-    );
+
+    let errorMessage = "An unknown error occurred";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    } else if (typeof error === "object" && error !== null) {
+      const err = error as Record<string, unknown>;
+      if (typeof err.message === "string") {
+        errorMessage = err.message;
+      } else if (err.data && typeof err.data === "object") {
+        const errData = err.data as Record<string, unknown>;
+        if (typeof errData.message === "string") {
+          errorMessage = errData.message;
+        }
+      }
+    } else if (typeof error === "string") {
+      errorMessage = error;
+    }
+
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

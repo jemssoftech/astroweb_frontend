@@ -1,26 +1,21 @@
 "use client";
 
 import Iconify from "@/src/components/Iconify";
+import { getAuthToken } from "@/src/lib/auth";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function LandingFooter() {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
 
-  const zodiacSigns = [
-    { name: "Aries", icon: "♈" },
-    { name: "Taurus", icon: "♉" },
-    { name: "Gemini", icon: "♊" },
-    { name: "Cancer", icon: "♋" },
-    { name: "Leo", icon: "♌" },
-    { name: "Virgo", icon: "♍" },
-    { name: "Libra", icon: "♎" },
-    { name: "Scorpio", icon: "♏" },
-    { name: "Sagittarius", icon: "♐" },
-    { name: "Capricorn", icon: "♑" },
-    { name: "Aquarius", icon: "♒" },
-    { name: "Pisces", icon: "♓" },
-  ];
-
+  if (
+    pathname === "/login" ||
+    pathname === "/register" ||
+    pathname?.includes("/dashboard")
+  ) {
+    return null;
+  }
   return (
     <footer className="relative bg-[#07080f] border-t border-[#A855F7]/20 pt-16 pb-6 overflow-hidden">
       {/* Background Grid Pattern */}
@@ -99,22 +94,6 @@ export default function LandingFooter() {
               >
                 <Iconify icon="ph:globe" className="text-lg" />
               </a>
-            </div>
-
-            {/* Zodiac Signs Row */}
-            <div className="flex items-center gap-2 mt-4 flex-wrap">
-              <span className="text-gray-500 text-[10px] font-bold tracking-widest uppercase mr-2 text-nowrap">
-                All Signs:
-              </span>
-              {zodiacSigns.map((sign, idx) => (
-                <div
-                  key={idx}
-                  className="w-5 h-5 rounded flex items-center justify-center bg-[#A855F7]/10 border border-[#A855F7]/30 text-[#A855F7] text-[10px]"
-                  title={sign.name}
-                >
-                  {sign.icon}
-                </div>
-              ))}
             </div>
           </div>
 

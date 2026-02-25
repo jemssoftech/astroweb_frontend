@@ -4,6 +4,7 @@ import "./globals.css";
 import LandingNavbar from "../components/landing-page/LandingNavbar";
 import LandingFooter from "../components/landing-page/LandingFooter";
 import { SocketProvider } from "@/src/context/SocketContext";
+import { Toaster } from "sonner";
 
 const publicSans = Public_Sans({
   subsets: ["latin"],
@@ -89,6 +90,7 @@ export default function RootLayout({
           <LandingNavbar />
           {children}
           <LandingFooter />
+          <Toaster position="top-center" richColors />
         </SocketProvider>
       </body>
     </html>

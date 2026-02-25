@@ -3,11 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import Iconify from "@/src/components/Iconify";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { getAuthToken, getUser } from "@/src/lib/auth";
 
 export default function LandingNavbar() {
+  const token = getAuthToken();
+  const user = getUser();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
   const navLinks = [
     { text: "Home", href: "/" },
     { text: "Kundali Pricing", href: "#pricing" },
@@ -16,8 +20,19 @@ export default function LandingNavbar() {
     { text: "Contact", href: "#contact" },
   ];
   const handleLogin = () => {
-    router.push("/login");
+    if (token) {
+      router.push("/dashboard");
+    } else {
+      router.push("/login");
+    }
   };
+  if (
+    pathname === "/login" ||
+    pathname === "/register" ||
+    pathname?.includes("/dashboard")
+  ) {
+    return null;
+  }
   return (
     <nav className="fixed w-full z-50 bg-[#0A0A0E]/90 backdrop-blur-md border-b border-white/5 top-0 left-0">
       <div className="container xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -54,16 +69,29 @@ export default function LandingNavbar() {
 
           {/* Desktop Buttons */}
           <div className="hidden lg:flex items-center gap-3">
-            <button
-              onClick={handleLogin}
-              className="flex items-center cursor-pointer gap-2 bg-[#9b51e0] hover:bg-[#8e44d2] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-[0_4px_14px_0_rgba(155,81,224,0.39)]"
-            >
-              <Iconify
-                icon="mdi:account-outline"
-                className="text-white text-lg"
-              />
-              Login / Register
-            </button>
+            {!token ? (
+              <button
+                onClick={handleLogin}
+                className="flex items-center cursor-pointer gap-2 bg-[#9b51e0] hover:bg-[#8e44d2] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-[0_4px_14px_0_rgba(155,81,224,0.39)]"
+              >
+                <Iconify
+                  icon="mdi:account-outline"
+                  className="text-white text-lg"
+                />
+                Login / Register
+              </button>
+            ) : (
+              <button
+                onClick={handleLogin}
+                className="flex items-center cursor-pointer gap-2 bg-[#9b51e0] hover:bg-[#8e44d2] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-[0_4px_14px_0_rgba(155,81,224,0.39)]"
+              >
+                <Iconify
+                  icon="mdi:account-outline"
+                  className="text-white text-lg"
+                />
+                {user?.username}
+              </button>
+            )}
           </div>
 
           {/* Mobile menu button */}

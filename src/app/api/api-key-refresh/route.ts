@@ -1,14 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
-import { decryptData } from "../../../utils/encryption";
+import { decryptData } from "@/src/utils/encryption";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const baseUrl = process.env.AUTH_BASE_URL;
-    const response = await fetch(`${baseUrl}/api/auth.web/verify-otp`, {
+
+    // 1. Get token from Headers (if sent from frontend)
+    const authHeader = req.headers.get("authorization");
+
+    // 2. Or fallback to checking the Cookies directly!
+    const token = authHeader
+      ? authHeader.replace("Bearer ", "")
+      : req.cookies.get("accessToken")?.value;
+
+    const response = await fetch(`${baseUrl}/api/auth.web/refresh-apikey`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(body),
     });
@@ -25,40 +35,6 @@ export async function POST(req: NextRequest) {
           const decryptedString = decryptData(data.encryptedData, data.iv);
           // Assuming the decrypted string is JSON, parse it back into an object
           data = JSON.parse(decryptedString);
-          console.log(data, "data");
-          if (data?.status === 1) {
-            const payload = {
-              mobileNumber: data?.mobileNumber || data?.data?.mobileNumber,
-              email: data?.email || data?.data?.email,
-            };
-            const userResponse = await fetch(`${baseUrl}/api/auth.web/user`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(payload),
-            });
-
-            const userContentType = userResponse.headers.get("content-type");
-            if (
-              userContentType &&
-              userContentType.includes("application/json")
-            ) {
-              let userData = await userResponse.json();
-
-              // The user endpoint might also return encrypted data
-              if (userData && userData.iv && userData.encryptedData) {
-                const decryptedUserStr = decryptData(
-                  userData.encryptedData,
-                  userData.iv,
-                );
-                userData = JSON.parse(decryptedUserStr);
-              }
-
-              // Attach the tokens and user to our main data object so the frontend can consume them
-              data.userAuth = userData;
-            }
-          }
         } catch (decryptErr) {
           console.error("Failed to decrypt API response:", decryptErr);
           // If we fail to decrypt, we might want to return a 500 error
