@@ -70,33 +70,42 @@ export default function OtpInput({
   const maskedNumber = `+91 ${mobileNumber.substring(0, 2)}******${mobileNumber.substring(8)}`;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 h-full min-h-[500px]">
+    <div className="grid grid-cols-1 md:grid-cols-2 h-full min-h-[600px] bg-[#0F172A]">
       {/* Left Side: Form */}
-      <div className="p-10 flex flex-col justify-center bg-white order-2 md:order-1">
+      <div className="p-10 flex flex-col justify-center bg-[#0F172A] order-2 md:order-1">
         <div className="max-w-md w-full mx-auto">
           <button
             onClick={onBack}
-            className="mb-6 flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors"
+            className="mb-8 cursor-pointer flex items-center w-fit text-xs font-bold text-slate-400 hover:text-white transition-colors bg-white/5 px-3 py-1.5 rounded-lg border border-white/5"
           >
-            <Iconify icon="mdi:arrow-left" className="mr-1 text-lg" />
+            <Iconify icon="mdi:arrow-left" className="mr-1.5 text-sm" />
             Back
           </button>
 
           <div className="mb-8">
-            <h3 className="text-3xl font-bold text-gray-900 mb-2">
-              Verify Mobile
-            </h3>
-            <p className="text-gray-500 text-sm">
-              We&apos;ve sent a 4-digit OTP to{" "}
-              <span className="font-semibold text-gray-900">
-                {maskedNumber}
+            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-6">
+              <div className="w-5 h-5 rounded-md bg-[#EA580C] flex items-center justify-center shadow-[0_0_10px_rgba(234,88,12,0.5)]">
+                <Iconify
+                  icon="ph:shield-check-fill"
+                  className="text-white text-[10px]"
+                />
+              </div>
+              <span className="text-xs font-bold text-white tracking-wide">
+                Secure Login
               </span>
+            </div>
+            <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">
+              Verify your number
+            </h3>
+            <p className="text-slate-400 text-sm">
+              We&apos;ve sent a 4-digit code to{" "}
+              <span className="font-bold text-white">{maskedNumber}</span>
               <button
                 type="button"
                 onClick={onBack}
-                className="ml-2 text-indigo-600 hover:text-indigo-800 underline"
+                className="ml-2 cursor-pointer text-[#EA580C] hover:text-[#C2410C] font-semibold underline decoration-transparent hover:decoration-[#EA580C] transition-all underline-offset-2"
               >
-                Edit
+                Change
               </button>
             </p>
           </div>
@@ -116,61 +125,67 @@ export default function OtpInput({
                     value={digit}
                     onChange={(e) => handleChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
-                    className="w-14 h-16 sm:w-16 sm:h-20 text-center text-2xl font-bold border rounded-xl focus:ring-4 focus:outline-none transition-all border-gray-200 focus:border-indigo-500 focus:ring-indigo-500/20 hover:border-gray-300"
+                    className="w-14 h-16 sm:w-16 sm:h-20 text-center text-2xl font-bold border rounded-xl focus:ring-4 focus:outline-none transition-all border-white/10 bg-[#1E293B] text-white focus:border-[#EA580C] focus:ring-[#EA580C]/20 hover:border-white/20"
                     maxLength={1}
                   />
                 ))}
               </div>
               {error && (
-                <p className="mt-2 text-sm text-red-600 text-center">{error}</p>
+                <p className="mt-2 text-xs text-red-400 text-center">{error}</p>
               )}
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-sm text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all mt-6"
+              className="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-[0_0_20px_rgba(234,88,12,0.3)] text-[14px] font-bold text-white bg-gradient-to-r from-[#F97316] to-[#EA580C] hover:from-[#EA580C] hover:to-[#C2410C] focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-offset-[#0F172A] focus:ring-[#EA580C]/50 disabled:opacity-70 disabled:cursor-not-allowed transition-all mt-6"
             >
               {loading ? (
-                <Iconify icon="mdi:loading" className="animate-spin text-2xl" />
+                <Iconify icon="mdi:loading" className="animate-spin text-xl" />
               ) : (
-                "Verify OTP"
+                <span className="flex items-center gap-2">
+                  Verify OTP{" "}
+                  <Iconify icon="mdi:arrow-right" className="text-sm" />
+                </span>
               )}
             </button>
           </form>
 
-          <div className="mt-8 text-center text-sm">
-            <span className="text-gray-500">Didn&apos;t receive the OTP? </span>
+          <div className="mt-8 pt-6 border-t border-white/5 text-center text-xs">
+            <span className="text-slate-500">
+              Didn&apos;t receive the code?{" "}
+            </span>
             <button
               type="button"
               onClick={onResend}
               disabled={loading}
-              className="font-semibold text-indigo-600 hover:text-indigo-500 disabled:text-gray-400 focus:outline-none"
+              className="font-bold text-white hover:text-[#EA580C] disabled:text-slate-600 focus:outline-none transition-colors ml-1"
             >
-              Resend OTP
+              Resend now
             </button>
           </div>
         </div>
       </div>
 
       {/* Right Side: Info */}
-      <div className="bg-gradient-to-br from-purple-900 via-indigo-900 to-indigo-950 p-10 flex flex-col justify-center text-white relative overflow-hidden order-1 md:order-2">
-        {/* Decorative elements */}
-        <div className="absolute top-0 left-0 -ml-16 -mt-16 w-64 h-64 rounded-full bg-white opacity-5 blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 -mr-16 -mb-16 w-64 h-64 rounded-full bg-indigo-500 opacity-10 blur-3xl"></div>
+      <div className="bg-[#0A0A0E] p-10 flex flex-col justify-center text-white relative overflow-hidden border-l border-white/5 order-1 md:order-2">
+        {/* Decorative elements - stars/universe feel */}
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-[#EA580C] opacity-10 blur-[80px]"></div>
+        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-[#F97316] opacity-10 blur-[80px]"></div>
 
-        <div className="relative z-10">
-          <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-md mb-8 shadow-lg border border-white/20">
+        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
+          <div className="w-24 h-24 relative rounded-2xl flex items-center justify-center bg-[#0F172A]/50 shadow-[0_0_30px_rgba(234,88,12,0.1)] border border-white/10 mb-8 overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#F97316]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <Iconify
-              icon="mdi:shield-check"
-              className="text-5xl text-indigo-300"
+              icon="solar:shield-check-bold-duotone"
+              className="text-6xl text-[#F97316]"
             />
           </div>
 
-          <h2 className="text-3xl font-bold mb-4">
+          <h2 className="text-3xl font-extrabold mb-3 leading-tight tracking-tight">
             Secure & Fast <br /> Authentication
           </h2>
-          <p className="text-indigo-200 text-lg leading-relaxed max-w-sm">
+          <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
             Your account security is our top priority. We use industry-standard
             encryption to protect your personal information and astrological
             charts.

@@ -4,42 +4,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Iconify from "../Iconify";
 import { logout } from "@/src/lib/auth";
-
-const NavIcon = () => (
-  <svg
-    width="22"
-    height="22"
-    viewBox="0 0 24 24"
-    fill="none"
-    className="shrink-0"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <circle cx="12" cy="12" r="6" stroke="#5d7b9a" strokeWidth="1.8" />
-    <path
-      d="M12 2v4M12 18v4M2 12h4M18 12h4"
-      stroke="#5d7b9a"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-    />
-    <circle cx="12" cy="12" r="2" stroke="#dc2626" strokeWidth="1.8" />
-    <path
-      d="M13 11l2 -2"
-      stroke="#dc2626"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-    />
-  </svg>
-);
+import Image from "next/image";
+import DashboardRedirectButton from "../DashboardRedirectButton";
 
 const NavItem = ({
   href,
   label,
+  icon,
   active,
   hasAlert,
   onClick,
 }: {
   href?: string;
   label: string;
+  icon: string;
   active?: boolean;
   hasAlert?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
@@ -47,7 +25,7 @@ const NavItem = ({
   const content = (
     <>
       <div className="flex items-center justify-center w-6 h-6">
-        <NavIcon />
+        <Iconify icon={icon} className="text-[20px] opacity-80" />
       </div>
       <span className="flex-1 tracking-wide text-left">{label}</span>
       {hasAlert && (
@@ -103,46 +81,23 @@ export default function Sidebar() {
       {/* Sidebar Content */}
       <div className="relative z-10 flex flex-col h-full pt-10 pb-8 overflow-y-auto overflow-x-hidden">
         {/* Logo Section */}
-        <div className="flex items-center gap-3 px-8 pl-9">
-          <div className="relative w-[48px] h-[38px] shrink-0">
-            <svg
-              viewBox="0 0 48 40"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-full"
-            >
-              {/* V (Purple) */}
-              <path d="M2 4 L12 4 L22 32 L12 32 Z" fill="#9b51e0" />
-              <path d="M12 32 L26 4 L36 4 L22 32 Z" fill="#9b51e0" />
-              {/* A (Teal) */}
-              <path d="M16 36 L30 8 L40 8 L26 36 Z" fill="#06B6D4" />
-              <path d="M30 8 L44 36 L34 36 L26 20 L16 36 Z" fill="#06B6D4" />
-              {/* Bar for A */}
-              <path d="M20 26 L38 26 L36 32 L18 32 Z" fill="#06B6D4" />
-            </svg>
+        <div className="flex items-center gap-3 px-6 pl-8">
+          <div className="relative w-[42px] h-[42px] shrink-0">
+            <Image
+              src="/image/logo.png"
+              alt="Astro Web Logo"
+              fill
+              className="object-contain"
+            />
           </div>
           <div className="flex flex-col flex-1">
             <div className="text-[23px] font-bold text-white tracking-wide leading-none">
               Astro Web
             </div>
             <div className="text-right text-[12px] text-gray-300 font-bold mt-1.5 pr-1">
-              v4.0.1
+              v{process.env.NEXT_PUBLIC_APP_VERSION}
             </div>
           </div>
-        </div>
-
-        {/* 'Now with' Badge Section */}
-        <div className="flex items-center gap-[7px] mt-8 px-8 pl-10">
-          <span className="text-[17px] font-bold text-white tracking-wide">
-            Now with
-          </span>
-          <span className="bg-[#FFEFE5] text-[#EA580C] text-[12px] font-extrabold px-[12px] py-[3.5px] rounded-full shadow-sm ml-1">
-            Western
-          </span>
-          <span className="text-[17px] font-bold text-white ml-0.5">&amp;</span>
-          <span className="bg-[#E0FAFC] text-[#0D9488] text-[12px] font-extrabold px-[14px] py-[3.5px] rounded-full shadow-sm">
-            Tarot
-          </span>
         </div>
 
         {/* Separator */}
@@ -153,34 +108,31 @@ export default function Sidebar() {
           <NavItem
             href="/dashboard"
             label="Dashboard"
+            icon="lucide:layout-dashboard"
             active={pathname === "/dashboard"}
           />
-
-          <NavItem
-            href="/dashboard/account"
-            label="Account"
-            active={pathname === "/dashboard/account"}
-            hasAlert
-          />
-
           <NavItem
             href="/dashboard/testing"
             label="Testing"
+            icon="lucide:flask-conical"
             active={pathname === "/dashboard/testing"}
           />
+          <DashboardRedirectButton />
         </div>
 
         {/* Bottom Nav Links */}
         <div className="flex flex-col space-y-2 mt-auto pt-6">
-          <NavItem href="/" label="Back To Website" />
           <button
             onClick={logout}
-            className="relative z-10 flex items-center gap-4 px-5 py-[12px] rounded-lg transition-all font-semibold text-[15.5px] mx-4 text-[#98b0cf] hover:bg-white/5 hover:text-[#d3e0f0]"
+            className="group relative z-10 flex items-center gap-4 px-5 py-[12px] rounded-lg transition-all font-semibold text-[15.5px] mx-4 text-[#98b0cf] hover:bg-white/5 hover:text-[#d3e0f0]"
           >
-            <div className="flex items-center justify-center w-6 h-6">
-              <NavIcon />
+            <div className="flex items-center justify-center w-6 h-6 text-[#98b0cf] group-hover:text-[#d3e0f0] transition-colors">
+              <Iconify
+                icon="lucide:log-out"
+                className="text-[20px] opacity-80"
+              />
             </div>
-            <span className="flex-1 tracking-wide">Log out</span>
+            <span className="flex-1 tracking-wide text-left">Log out</span>
           </button>
         </div>
       </div>

@@ -50,12 +50,12 @@ export default function LandingCTA() {
                   width: "6px",
                   height: "6px",
                   borderRadius: "50%",
-                  background: "#a855f7",
-                  boxShadow: "0 0 8px #a855f7",
+                  background: "#F97316",
+                  boxShadow: "0 0 8px #F97316",
                   animation: "pulse-dot 2s ease infinite",
                 }}
               ></div>
-              <span className="text-[#A855F7] text-[10px] font-bold tracking-wider uppercase">
+              <span className="text-[#F97316] text-[10px] font-bold tracking-wider uppercase">
                 Limited Time Offer
               </span>
             </div>
@@ -63,7 +63,7 @@ export default function LandingCTA() {
             {/* Title */}
             <h2 className="text-[2.5rem] md:text-[3.5rem] font-bold text-white mb-4 tracking-tight leading-[1.1]">
               Ready to get <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F472B6] to-[#A855F7]">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FBBF24] to-[#F97316]">
                 started?
               </span>
             </h2>
@@ -77,10 +77,10 @@ export default function LandingCTA() {
             {/* Checklist */}
             <ul className="flex flex-col gap-3 mb-10">
               <li className="flex items-center gap-3">
-                <div className="w-5 h-5 rounded-full bg-[#A855F7]/10 flex items-center justify-center border border-[#A855F7]/30">
+                <div className="w-5 h-5 rounded-full bg-[#F97316]/10 flex items-center justify-center border border-[#F97316]/30">
                   <Iconify
                     icon="ph:check-bold"
-                    className="text-[#A855F7] text-[10px]"
+                    className="text-[#F97316] text-[10px]"
                   />
                 </div>
                 <span className="text-gray-300 text-[13px]">
@@ -88,10 +88,10 @@ export default function LandingCTA() {
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <div className="w-5 h-5 rounded-full bg-[#A855F7]/10 flex items-center justify-center border border-[#A855F7]/30">
+                <div className="w-5 h-5 rounded-full bg-[#F97316]/10 flex items-center justify-center border border-[#F97316]/30">
                   <Iconify
                     icon="ph:check-bold"
-                    className="text-[#A855F7] text-[10px]"
+                    className="text-[#F97316] text-[10px]"
                   />
                 </div>
                 <span className="text-gray-300 text-[13px]">
@@ -99,10 +99,10 @@ export default function LandingCTA() {
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <div className="w-5 h-5 rounded-full bg-[#A855F7]/10 flex items-center justify-center border border-[#A855F7]/30">
+                <div className="w-5 h-5 rounded-full bg-[#F97316]/10 flex items-center justify-center border border-[#F97316]/30">
                   <Iconify
                     icon="ph:check-bold"
-                    className="text-[#A855F7] text-[10px]"
+                    className="text-[#F97316] text-[10px]"
                   />
                 </div>
                 <span className="text-gray-300 text-[13px]">
@@ -113,10 +113,10 @@ export default function LandingCTA() {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-4 mb-12">
-              <button className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#A855F7] to-[#8B5CF6] text-white text-[13px] font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all">
+              <button className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white text-[13px] font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(249, 115, 22,0.4)] transition-all">
                 Get Started Free <Iconify icon="ph:arrow-right-bold" />
               </button>
-              <button className="px-6 py-3 rounded-xl bg-[#111116] border border-white/10 text-gray-300 text-[13px] font-bold flex items-center gap-2 hover:bg-[#1A1A24] transition-all">
+              <button className="px-6 py-3 rounded-xl bg-[#1E293B] border border-white/10 text-gray-300 text-[13px] font-bold flex items-center gap-2 hover:bg-[#1A1A24] transition-all">
                 <Iconify icon="ph:play-circle" className="text-lg" /> Watch Demo
               </button>
             </div>
@@ -155,24 +155,24 @@ export default function LandingCTA() {
           {/* Right Side - Visual Saturn Graphic */}
           <div className="w-full lg:w-[50%] relative">
             {/* The container for the Saturn image and glass effects */}
-            <div className="relative rounded-3xl overflow-hidden bg-[#0A0A0E] border border-white/5 aspect-[4/3] w-full shadow-2xl group flex items-center justify-center">
+            <div className="relative rounded-3xl overflow-hidden bg-[#0F172A] border border-white/5 aspect-[4/3] w-full shadow-2xl group flex items-center justify-center">
               {/* Purple ambient back glow behind Saturn */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-[#A855F7] opacity-20 blur-[80px] rounded-full pointer-events-none z-0"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-[#F97316] opacity-20 blur-[80px] rounded-full pointer-events-none z-0"></div>
 
               {/* Saturn Image placeholder (We will use an unsplash space image for now, user can change if needed) */}
               <div className="relative w-[350px] h-[350px] lg:w-[450px] lg:h-[450px] z-10 transition-transform duration-700 ease-in-out group-hover:scale-105">
                 <img
                   src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?q=80&w=1000&auto=format&fit=crop"
                   alt="Saturn"
-                  className="w-full h-full object-contain filter contrast-125 brightness-90 drop-shadow-[0_0_30px_rgba(168,85,247,0.3)] mix-blend-screen"
+                  className="w-full h-full object-contain filter contrast-125 brightness-90 drop-shadow-[0_0_30px_rgba(249, 115, 22,0.3)] mix-blend-screen"
                 />
               </div>
 
               {/* Floating Glass Badges */}
 
               {/* Top Left Floating Badge (Growth) */}
-              <div className="absolute top-[20%] -left-8 md:-left-12 lg:-left-6 bg-[#16161D]/80 backdrop-blur-md border border-[#A855F7]/30 rounded-xl p-3 flex items-center gap-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 animate-[float_6s_ease-in-out_infinite]">
-                <div className="w-8 h-8 rounded-lg bg-[#2D1B4E] flex items-center justify-center text-[#A855F7]">
+              <div className="absolute top-[20%] -left-8 md:-left-12 lg:-left-6 bg-[#1E293B]/80 backdrop-blur-md border border-[#F97316]/30 rounded-xl p-3 flex items-center gap-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 animate-[float_6s_ease-in-out_infinite]">
+                <div className="w-8 h-8 rounded-lg bg-[#2D1B4E] flex items-center justify-center text-[#F97316]">
                   <Iconify icon="ph:chart-line-up-bold" />
                 </div>
                 <div className="pr-2">
@@ -184,7 +184,7 @@ export default function LandingCTA() {
               </div>
 
               {/* Middle Right Floating Badge (Uptime) */}
-              <div className="absolute top-[45%] -right-8 md:-right-12 lg:-right-6 bg-[#16161D]/80 backdrop-blur-md border border-[#10B981]/30 rounded-xl p-3 flex items-center gap-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 animate-[float_8s_ease-in-out_infinite_reverse]">
+              <div className="absolute top-[45%] -right-8 md:-right-12 lg:-right-6 bg-[#1E293B]/80 backdrop-blur-md border border-[#10B981]/30 rounded-xl p-3 flex items-center gap-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 animate-[float_8s_ease-in-out_infinite_reverse]">
                 <div className="w-8 h-8 rounded-lg bg-[#064E3B] flex items-center justify-center text-[#10B981]">
                   <Iconify icon="ph:check-circle-fill" />
                 </div>
@@ -197,8 +197,8 @@ export default function LandingCTA() {
               </div>
 
               {/* Bottom Right Floating Badge (Rating) */}
-              <div className="absolute bottom-[20%] -right-4 md:-right-8 lg:right-4 bg-[#16161D]/80 backdrop-blur-md border border-[#EC4899]/30 rounded-xl p-3 flex items-center gap-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 animate-[float_7s_ease-in-out_infinite_1s]">
-                <div className="w-8 h-8 rounded-lg bg-[#831843] flex items-center justify-center text-[#EC4899]">
+              <div className="absolute bottom-[20%] -right-4 md:-right-8 lg:right-4 bg-[#1E293B]/80 backdrop-blur-md border border-[#F59E0B]/30 rounded-xl p-3 flex items-center gap-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 animate-[float_7s_ease-in-out_infinite_1s]">
+                <div className="w-8 h-8 rounded-lg bg-[#831843] flex items-center justify-center text-[#F59E0B]">
                   <Iconify icon="ph:star-fill" />
                 </div>
                 <div className="pr-2">

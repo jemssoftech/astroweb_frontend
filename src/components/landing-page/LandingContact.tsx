@@ -42,15 +42,15 @@ export default function LandingContact() {
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1A1A24] border border-[#2D1B4E] mb-6 shadow-[0_0_15px_rgba(45,27,78,0.3)]">
-            <div className="w-[6px] h-[6px] bg-[#a855f7] rounded-full shadow-[0_0_8px_#a855f7] animate-[pulse-dot_2s_ease_infinite]"></div>
-            <span className="text-[#A855F7] text-[10px] font-bold tracking-wider uppercase">
+            <div className="w-[6px] h-[6px] bg-[#F97316] rounded-full shadow-[0_0_8px_#F97316] animate-[pulse-dot_2s_ease_infinite]"></div>
+            <span className="text-[#F97316] text-[10px] font-bold tracking-wider uppercase">
               Contact Us
             </span>
           </div>
 
           <h2 className="text-[2.5rem] md:text-[3.5rem] font-bold text-white mb-4 tracking-tight leading-[1.1]">
             Let&apos;s work <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F472B6] to-[#A855F7]">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FBBF24] to-[#F97316]">
               together
             </span>
           </h2>
@@ -63,7 +63,7 @@ export default function LandingContact() {
         {/* Two Column Layout */}
         <div className="flex flex-col lg:flex-row gap-6  mx-auto items-stretch">
           {/* Left Side - Info Card */}
-          <div className="w-full lg:w-[40%] bg-[#111116] border border-white/5 rounded-3xl p-6 flex flex-col justify-between">
+          <div className="w-full lg:w-[40%] bg-[#1E293B] border border-white/5 rounded-3xl p-6 flex flex-col justify-between">
             {/* Illustration */}
             <div className="w-full aspect-square bg-[#1A1A24] rounded-2xl mb-6 relative overflow-hidden flex items-center justify-center border border-white/5">
               {/* Fallback image if illustration isn't available, but keeping it conceptually close */}
@@ -73,7 +73,7 @@ export default function LandingContact() {
                 alt="Contact Support Illustration"
                 className="w-full h-full object-cover mix-blend-screen opacity-80 filter contrast-125"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#111116] via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1E293B] via-transparent to-transparent"></div>
             </div>
 
             {/* Contact Details */}
@@ -82,7 +82,7 @@ export default function LandingContact() {
                 href="mailto:astrologyservice@gmail.com"
                 className="flex items-center gap-4 bg-[#1A1A24] border border-[#2D1B4E]/50 rounded-xl p-4 transition-colors hover:bg-[#20202C]"
               >
-                <div className="w-10 h-10 rounded-lg bg-[#2D1B4E] flex items-center justify-center text-[#A855F7] shrink-0">
+                <div className="w-10 h-10 rounded-lg bg-[#2D1B4E] flex items-center justify-center text-[#F97316] shrink-0">
                   <Iconify icon="ph:envelope-simple-fill" className="text-xl" />
                 </div>
                 <div className="flex flex-col overflow-hidden">
@@ -115,14 +115,14 @@ export default function LandingContact() {
 
             {/* Decorative Get In Touch text */}
             <div className="text-right mt-6">
-              <span className="text-[10px] font-bold tracking-[0.2em] text-[#A855F7]/30 uppercase">
+              <span className="text-[10px] font-bold tracking-[0.2em] text-[#F97316]/30 uppercase">
                 Get in touch
               </span>
             </div>
           </div>
 
           {/* Right Side - Form Container */}
-          <div className="w-full lg:w-[60%] bg-[#111116] border border-white/5 rounded-3xl p-8 lg:p-10 flex flex-col">
+          <div className="w-full lg:w-[60%] bg-[#1E293B] border border-white/5 rounded-3xl p-8 lg:p-10 flex flex-col">
             <h3 className="text-xl font-bold text-white mb-2">
               Send a message
             </h3>
@@ -145,7 +145,7 @@ export default function LandingContact() {
                     type="text"
                     id="name"
                     placeholder="John Doe"
-                    className="w-full bg-[#1A1A24] border border-white/10 rounded-xl px-4 py-3.5 text-[13px] text-white placeholder:text-gray-600 focus:outline-none focus:border-[#A855F7]/50 focus:bg-[#1A1A24] transition-colors"
+                    className="w-full bg-[#1A1A24] border border-white/10 rounded-xl px-4 py-3.5 text-[13px] text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F97316]/50 focus:bg-[#1A1A24] transition-colors"
                   />
                 </div>
 
@@ -161,7 +161,7 @@ export default function LandingContact() {
                     type="email"
                     id="email"
                     placeholder="john@example.com"
-                    className="w-full bg-[#1A1A24] border border-white/10 rounded-xl px-4 py-3.5 text-[13px] text-white placeholder:text-gray-600 focus:outline-none focus:border-[#A855F7]/50 focus:bg-[#1A1A24] transition-colors"
+                    className="w-full bg-[#1A1A24] border border-white/10 rounded-xl px-4 py-3.5 text-[13px] text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F97316]/50 focus:bg-[#1A1A24] transition-colors"
                   />
                 </div>
               </div>
@@ -177,14 +177,14 @@ export default function LandingContact() {
                 <textarea
                   id="message"
                   placeholder="Write your message here..."
-                  className="w-full h-full min-h-[150px] bg-[#1A1A24] border border-white/10 rounded-xl px-4 py-3.5 text-[13px] text-white placeholder:text-gray-600 focus:outline-none focus:border-[#A855F7]/50 focus:bg-[#1A1A24] transition-colors resize-none"
+                  className="w-full h-full min-h-[150px] bg-[#1A1A24] border border-white/10 rounded-xl px-4 py-3.5 text-[13px] text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F97316]/50 focus:bg-[#1A1A24] transition-colors resize-none"
                 ></textarea>
               </div>
 
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full py-4 rounded-xl bg-gradient-to-r from-[#A855F7] to-[#8B5CF6] text-white text-[13px] font-bold mt-2 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white text-[13px] font-bold mt-2 hover:shadow-[0_0_20px_rgba(249, 115, 22,0.4)] transition-all flex items-center justify-center gap-2"
               >
                 Send Inquiry <Iconify icon="ph:arrow-right-bold" />
               </button>
@@ -195,12 +195,12 @@ export default function LandingContact() {
         {/* Bottom Small Note */}
         <div className="flex justify-center mt-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1A1A24] border border-[#2D1B4E] shadow-[0_0_15px_rgba(45,27,78,0.2)]">
-            <div className="w-[6px] h-[6px] bg-[#A855F7] rounded-full"></div>
+            <div className="w-[6px] h-[6px] bg-[#F97316] rounded-full"></div>
             <span className="text-gray-400 text-[11px]">
               We typically respond within 24 hours —{" "}
               <a
                 href="mailto:astrologyservice@gmail.com"
-                className="text-[#A855F7] hover:underline"
+                className="text-[#F97316] hover:underline"
               >
                 email us directly{" "}
                 <Iconify

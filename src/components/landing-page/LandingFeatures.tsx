@@ -20,9 +20,9 @@ export default function LandingFeatures() {
       description:
         "Free updates for the next 12 months, including new demos and features.",
       icon: "ph:arrows-clockwise-bold",
-      colorClass: "text-[#EC4899]", // Pink
+      colorClass: "text-[#F59E0B]", // Pink
       bgClass: "bg-[#831843]/40",
-      numClass: "text-[#EC4899]/50",
+      numClass: "text-[#F59E0B]/50",
     },
     {
       num: "03",
@@ -60,9 +60,9 @@ export default function LandingFeatures() {
       description:
         "An easy-to-follow doc with lots of references and code examples.",
       icon: "ph:book-open-text-bold",
-      colorClass: "text-[#A855F7]", // Purple
+      colorClass: "text-[#F97316]", // Purple
       bgClass: "bg-[#4C1D95]/40",
-      numClass: "text-[#A855F7]/50",
+      numClass: "text-[#F97316]/50",
     },
   ];
 
@@ -104,7 +104,7 @@ export default function LandingFeatures() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#18112A] border border-[#2D1B4E] mb-6 shadow-[0_0_15px_rgba(45,27,78,0.5)]">
             <Iconify
               icon="ph:star-four-fill"
-              className="text-[#A855F7] text-xs"
+              className="text-[#F97316] text-xs"
             />
             <span className="text-[#D8B4FE] text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase">
               USEFUL FEATURES
@@ -113,7 +113,7 @@ export default function LandingFeatures() {
 
           <h2 className="text-[2.5rem] md:text-[3.5rem] font-bold text-white mb-6 tracking-tight leading-[1.1]">
             Everything you need <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F472B6] to-[#A855F7]">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FBBF24] to-[#F97316]">
               to start your next project
             </span>
           </h2>
@@ -133,7 +133,7 @@ export default function LandingFeatures() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="relative bg-[#111116] border border-white/[0.04] rounded-2xl p-8 hover:bg-[#16161D] transition-colors group shadow-lg"
+              className="relative bg-[#1E293B] border border-white/[0.04] rounded-2xl p-8 hover:bg-[#1E293B] transition-colors group shadow-lg"
             >
               {/* Number */}
               <span
@@ -173,8 +173,8 @@ export default function LandingFeatures() {
 
         {/* Bottom Pill */}
         <div className="flex justify-center">
-          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#111116] border border-[#2D1B4E] hover:bg-[#16161D] transition-all cursor-pointer shadow-[0_0_20px_rgba(45,27,78,0.2)] hover:shadow-[0_0_25px_rgba(45,27,78,0.4)] hover:scale-[1.02]">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#A855F7]"></div>
+          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1E293B] border border-[#2D1B4E] hover:bg-[#1E293B] transition-all cursor-pointer shadow-[0_0_20px_rgba(45,27,78,0.2)] hover:shadow-[0_0_25px_rgba(45,27,78,0.4)] hover:scale-[1.02]">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#F97316]"></div>
             <span className="text-gray-400 text-[13px]">
               All features included in every plan —
             </span>

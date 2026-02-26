@@ -32,7 +32,7 @@ const faqs = [
     answer:
       "Your Sun sign represents your core identity, the Moon sign reflects your inner emotions, and your Rising sign acts as the mask you present to the world. A complete reading integrates all three.",
     icon: "ph:letter-c-bold", // Closest visual match to the purple 'C' icon
-    iconColor: "text-purple-400",
+    iconColor: "text-orange-400",
   },
   {
     question: "How often are daily horoscopes updated?",
@@ -98,16 +98,16 @@ export default function LandingFAQ() {
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1A1A24] border border-[#2D1B4E] mb-6 shadow-[0_0_15px_rgba(45,27,78,0.3)]">
             <Iconify
               icon="ph:star-four-fill"
-              className="text-[#A855F7] text-xs"
+              className="text-[#F97316] text-xs"
             />
-            <span className="text-[#A855F7] text-[10px] font-bold tracking-wider uppercase">
+            <span className="text-[#F97316] text-[10px] font-bold tracking-wider uppercase">
               Cosmic Questions
             </span>
           </div>
 
           <h2 className="text-[2.5rem] md:text-[3.5rem] font-bold text-white mb-4 tracking-tight leading-[1.1]">
             Frequently Asked <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F472B6] to-[#A855F7]">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FBBF24] to-[#F97316]">
               Questions
             </span>
           </h2>
@@ -126,49 +126,49 @@ export default function LandingFAQ() {
             {/* The Orbital Element */}
             <div className="relative w-[300px] h-[300px] lg:w-[350px] lg:h-[350px]">
               {/* Outer Orbit */}
-              <div className="absolute inset-0 rounded-full border border-purple-500/20 animate-[spin_40s_linear_infinite]" />
+              <div className="absolute inset-0 rounded-full border border-orange-500/20 animate-[spin_40s_linear_infinite]" />
 
               {/* Middle Orbit */}
-              <div className="absolute inset-[40px] rounded-full border border-dashed border-purple-500/30 animate-[spin_30s_linear_infinite_reverse]" />
+              <div className="absolute inset-[40px] rounded-full border border-dashed border-orange-500/30 animate-[spin_30s_linear_infinite_reverse]" />
 
               {/* Inner Orbit */}
-              <div className="absolute inset-[80px] rounded-full border border-purple-500/10" />
+              <div className="absolute inset-[80px] rounded-full border border-orange-500/10" />
 
               {/* Center Glow / Orb */}
-              <div className="absolute inset-0 m-auto w-[120px] h-[120px] rounded-full bg-gradient-to-br from-purple-800 to-[#1e0a29] shadow-[0_0_60px_rgba(168,85,247,0.4)] flex flex-col items-center justify-center p-4 border border-purple-500/30 font-semibold z-10">
+              <div className="absolute inset-0 m-auto w-[120px] h-[120px] rounded-full bg-gradient-to-br from-orange-800 to-[#1e293b] shadow-[0_0_60px_rgba(249, 115, 22,0.4)] flex flex-col items-center justify-center p-4 border border-orange-500/30 font-semibold z-10">
                 <div className="text-2xl mb-1">🔮</div>
-                <div className="text-[9px] text-purple-300 tracking-widest text-center mt-1">
+                <div className="text-[9px] text-orange-300 tracking-widest text-center mt-1">
                   COSMIC ORACLE
                 </div>
               </div>
 
               {/* Orbiting Icons (Static positions for visual representation, in a real app these would be animated along the path) */}
-              <div className="absolute top-[5%] right-[20%] w-8 h-8 rounded-lg bg-[#16161D] border border-white/5 flex items-center justify-center shadow-lg z-20">
+              <div className="absolute top-[5%] right-[20%] w-8 h-8 rounded-lg bg-[#1E293B] border border-white/5 flex items-center justify-center shadow-lg z-20">
                 ♈
               </div>
-              <div className="absolute top-[30%] -right-[5%] w-8 h-8 rounded-lg bg-[#16161D] border border-white/5 flex items-center justify-center shadow-lg z-20 text-purple-400">
+              <div className="absolute top-[30%] -right-[5%] w-8 h-8 rounded-lg bg-[#1E293B] border border-white/5 flex items-center justify-center shadow-lg z-20 text-orange-400">
                 ♓
               </div>
-              <div className="absolute bottom-[20%] left-[0%] w-8 h-8 rounded-lg bg-[#16161D] border border-white/5 flex items-center justify-center shadow-lg z-20 text-pink-400">
+              <div className="absolute bottom-[20%] left-[0%] w-8 h-8 rounded-lg bg-[#1E293B] border border-white/5 flex items-center justify-center shadow-lg z-20 text-amber-400">
                 ♏
               </div>
-              <div className="absolute top-[20%] left-[5%] w-6 h-6 rounded-md bg-[#16161D] border border-white/5 flex items-center justify-center shadow-lg z-20 opacity-70">
+              <div className="absolute top-[20%] left-[5%] w-6 h-6 rounded-md bg-[#1E293B] border border-white/5 flex items-center justify-center shadow-lg z-20 opacity-70">
                 ♊
               </div>
 
               {/* Additional small floating symbols */}
-              <div className="absolute top-[5%] left-[30%] text-[10px] text-purple-500 opacity-60">
+              <div className="absolute top-[5%] left-[30%] text-[10px] text-orange-500 opacity-60">
                 ♋
               </div>
               <div className="absolute bottom-[10%] left-[25%] text-[12px] text-indigo-400 opacity-80">
                 ♑
               </div>
-              <div className="absolute bottom-[30%] right-[10%] text-[10px] text-pink-500 opacity-70">
+              <div className="absolute bottom-[30%] right-[10%] text-[10px] text-amber-500 opacity-70">
                 ♍
               </div>
 
               {/* Data Card floating on bottom right */}
-              <div className="absolute -bottom-4 right-0 bg-[#0F0F13]/90 backdrop-blur-md border border-white/10 rounded-xl p-3 flex items-center gap-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-30">
+              <div className="absolute -bottom-4 right-0 bg-[#1E293B]/90 backdrop-blur-md border border-white/10 rounded-xl p-3 flex items-center gap-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-30">
                 <div className="w-8 h-8 rounded-md bg-[#1E112A] flex items-center justify-center text-amber-400">
                   <Iconify icon="ph:calendar-blank-fill" />
                 </div>
@@ -184,7 +184,7 @@ export default function LandingFAQ() {
             </div>
 
             {/* Ambient Backlight */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] bg-purple-600/20 blur-[80px] rounded-full pointer-events-none z-0"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] bg-orange-600/20 blur-[80px] rounded-full pointer-events-none z-0"></div>
           </div>
 
           {/* Right Side - FAQ Accordion */}
@@ -196,8 +196,8 @@ export default function LandingFAQ() {
                   key={index}
                   className={`overflow-hidden rounded-xl border transition-all duration-300 ${
                     isOpen
-                      ? "bg-[#111116] border-[#3B1963] shadow-[0_0_20px_rgba(59,25,99,0.2)]"
-                      : "bg-[#0A0A0E] border-white/5 hover:border-white/10"
+                      ? "bg-[#1E293B] border-[#3B1963] shadow-[0_0_20px_rgba(59,25,99,0.2)]"
+                      : "bg-[#0F172A] border-white/5 hover:border-white/10"
                   }`}
                 >
                   {/* Question Header */}
@@ -217,7 +217,7 @@ export default function LandingFAQ() {
                       </span>
                     </div>
                     <div
-                      className={`transition-transform duration-300 text-gray-500 ${isOpen ? "rotate-180 text-purple-400" : ""}`}
+                      className={`transition-transform duration-300 text-gray-500 ${isOpen ? "rotate-180 text-orange-400" : ""}`}
                     >
                       <Iconify icon="ph:caret-down-bold" className="text-xs" />
                     </div>

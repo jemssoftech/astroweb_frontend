@@ -46,14 +46,14 @@ export default function LandingPricing() {
       isPopular: false,
       theme: {
         borderGroup:
-          "border-purple-400/20 hover:border-purple-400/50 hover:shadow-[0_0_60px_rgba(192,132,252,0.12),0_20px_60px_rgba(0,0,0,0.4)]",
-        gradientText: "from-purple-500 to-purple-400",
-        gradientBg: "from-purple-500 to-purple-400",
+          "border-orange-400/20 hover:border-orange-400/50 hover:shadow-[0_0_60px_rgba(192,132,252,0.12),0_20px_60px_rgba(0,0,0,0.4)]",
+        gradientText: "from-orange-500 to-orange-400",
+        gradientBg: "from-orange-500 to-orange-400",
         glow: "bg-[radial-gradient(circle,rgba(192,132,252,0.12)_0%,transparent_70%)]",
         iconShadow: "shadow-[0_8px_28px_rgba(192,132,252,0.12)]",
-        checkBorder: "border-purple-400/40",
+        checkBorder: "border-orange-400/40",
         checkFill: "#c084fc",
-        btnBorder: "border-purple-400/20",
+        btnBorder: "border-orange-400/20",
         btnHoverShadow: "hover:shadow-[0_12px_36px_rgba(192,132,252,0.12)]",
       },
     },
@@ -80,14 +80,14 @@ export default function LandingPricing() {
       isPopular: true,
       theme: {
         borderGroup:
-          "border-pink-500/30 hover:border-pink-500/60 hover:shadow-[0_0_60px_rgba(236,72,153,0.15),0_20px_60px_rgba(0,0,0,0.4)]",
-        gradientText: "from-pink-500 to-pink-400",
-        gradientBg: "from-pink-500 to-pink-400",
+          "border-amber-500/30 hover:border-amber-500/60 hover:shadow-[0_0_60px_rgba(236,72,153,0.15),0_20px_60px_rgba(0,0,0,0.4)]",
+        gradientText: "from-amber-500 to-amber-400",
+        gradientBg: "from-amber-500 to-amber-400",
         glow: "bg-[radial-gradient(circle,rgba(236,72,153,0.12)_0%,transparent_70%)]",
         iconShadow: "shadow-[0_8px_28px_rgba(236,72,153,0.2)]",
-        checkBorder: "border-pink-500/40",
-        checkFill: "#ec4899",
-        btnBorder: "border-pink-500/40",
+        checkBorder: "border-amber-500/40",
+        checkFill: "#F59E0B",
+        btnBorder: "border-amber-500/40",
         btnHoverShadow: "hover:shadow-[0_12px_36px_rgba(236,72,153,0.25)]",
       },
     },
@@ -162,7 +162,7 @@ export default function LandingPricing() {
         <div className="flex flex-col items-center mb-16">
           <h2 className="text-[2.5rem] md:text-[3.5rem] font-bold text-white mb-4 tracking-tight leading-[1.1]">
             Tailored pricing plans <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F472B6] to-[#A855F7] opacity-80">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FBBF24] to-[#F97316] opacity-80">
               designed for you
             </span>
           </h2>
@@ -198,7 +198,7 @@ export default function LandingPricing() {
                 <div className="px-[28px] pt-[36px] pb-[32px]">
                   {/* Popular Badge */}
                   {plan.isPopular && (
-                    <div className="absolute top-4 right-4 bg-gradient-to-r from-pink-500 to-pink-400 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-[0_0_10px_rgba(236,72,153,0.5)] flex items-center gap-1 z-20">
+                    <div className="absolute top-4 right-4 bg-gradient-to-r from-amber-500 to-amber-400 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-[0_0_10px_rgba(236,72,153,0.5)] flex items-center gap-1 z-20">
                       <Iconify icon="ph:star-fill" className="text-[10px]" />{" "}
                       {plan.badge}
                     </div>
@@ -313,7 +313,7 @@ export default function LandingPricing() {
           </div>
 
           <div className="flex flex-col items-center text-center">
-            <div className="w-8 h-8 rounded-full bg-[#1E112A] flex items-center justify-center mb-3 text-[#A855F7]">
+            <div className="w-8 h-8 rounded-full bg-[#1E112A] flex items-center justify-center mb-3 text-[#F97316]">
               <Iconify icon="mdi:lock" className="text-sm" />
             </div>
             <h4 className="text-white text-xs font-bold mb-1">Secure & Safe</h4>

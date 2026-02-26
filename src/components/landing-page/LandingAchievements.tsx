@@ -8,18 +8,18 @@ export default function LandingAchievements() {
       value: "7.1k+",
       label: "Support Tickets Resolved",
       icon: "mdi:ticket",
-      colorClass: "text-[#A855F7]", // Purple
+      colorClass: "text-[#F97316]", // Purple
       bgClass: "bg-[#2D1B4E]",
-      borderColor: "border-[#A855F7]",
-      glowColor: "shadow-[0_0_20px_rgba(168,85,247,0.3)]",
+      borderColor: "border-[#F97316]",
+      glowColor: "shadow-[0_0_20px_rgba(249, 115, 22,0.3)]",
     },
     {
       value: "50k+",
       label: "Cosmic Community Members",
       icon: "mdi:moon-waning-crescent",
-      colorClass: "text-[#EC4899]", // Pink
+      colorClass: "text-[#F59E0B]", // Pink
       bgClass: "bg-[#4A1D3A]",
-      borderColor: "border-[#EC4899]",
+      borderColor: "border-[#F59E0B]",
       glowColor: "shadow-[0_0_20px_rgba(236,72,153,0.3)]",
     },
     {
@@ -45,7 +45,7 @@ export default function LandingAchievements() {
 
   return (
     <section
-      className="relative py-24 bg-[#0A0A0E] overflow-hidden"
+      className="relative py-24 bg-[#0F172A] overflow-hidden"
       id="achievements"
     >
       {/* Background Grid Pattern */}
@@ -76,13 +76,13 @@ export default function LandingAchievements() {
         }}
       ></div>
       {/* Subtle Background Radial Gradients */}
-      <div className="absolute top-[20%] left-[-10%] w-[40%] h-[40%] bg-[#A855F7] opacity-[0.02] blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-[#EC4899] opacity-[0.02] blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-[20%] left-[-10%] w-[40%] h-[40%] bg-[#F97316] opacity-[0.02] blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-[#F59E0B] opacity-[0.02] blur-[120px] rounded-full pointer-events-none" />
 
       <div className="container xl:max-w-[1440px] mx-auto px-4 sm:px-6 relative z-10 w-full max-w-full">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-16 w-full">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1A0B2E]/80 border border-[#A855F7]/30 mb-8 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1A0B2E]/80 border border-[#F97316]/30 mb-8 backdrop-blur-sm">
             <Iconify
               icon="ph:sparkle-fill"
               className="text-[#E879F9] text-[10px]"
@@ -94,7 +94,7 @@ export default function LandingAchievements() {
 
           <h2 className="text-[2.2rem] sm:text-[3rem] md:text-[3.5rem] font-bold text-white mb-6 tracking-tight leading-[1.1]">
             Trusted by thousands of <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F472B6] to-[#A855F7] pb-1 inline-block">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FBBF24] to-[#F97316] pb-1 inline-block">
               satisfied customers
             </span>
           </h2>
@@ -113,7 +113,7 @@ export default function LandingAchievements() {
           {achievements.map((item, index) => (
             <div
               key={index}
-              className="relative bg-[#0A0A0E] border border-white/5 rounded-2xl p-8 lg:p-10 flex flex-col items-center text-center hover:bg-[#111116] transition-all group shadow-xl flex-1 w-full max-w-[280px]"
+              className="relative bg-[#0F172A] border border-white/5 rounded-2xl p-8 lg:p-10 flex flex-col items-center text-center hover:bg-[#1E293B] transition-all group shadow-xl flex-1 w-full max-w-[280px]"
             >
               {/* Icon Box */}
               <div
@@ -171,54 +171,54 @@ export default function LandingAchievements() {
             POWERED BY COSMIC PRECISION
           </div>
 
-          <div className="flex gap-4 sm:gap-6 md:gap-8 text-[#A855F7]/60 overflow-hidden w-full justify-center flex-wrap">
+          <div className="flex gap-4 sm:gap-6 md:gap-8 text-[#F97316]/60 overflow-hidden w-full justify-center flex-wrap">
             <Iconify
               icon="mdi:zodiac-aries"
-              className="text-lg hover:text-[#A855F7] transition-colors cursor-pointer"
+              className="text-lg hover:text-[#F97316] transition-colors cursor-pointer"
             />
             <Iconify
               icon="mdi:zodiac-taurus"
-              className="text-lg hover:text-[#A855F7] transition-colors cursor-pointer"
+              className="text-lg hover:text-[#F97316] transition-colors cursor-pointer"
             />
             <Iconify
               icon="mdi:zodiac-gemini"
-              className="text-lg hover:text-[#A855F7] transition-colors cursor-pointer"
+              className="text-lg hover:text-[#F97316] transition-colors cursor-pointer"
             />
             <Iconify
               icon="mdi:zodiac-cancer"
-              className="text-lg hover:text-[#A855F7] transition-colors cursor-pointer"
+              className="text-lg hover:text-[#F97316] transition-colors cursor-pointer"
             />
             <Iconify
               icon="mdi:zodiac-leo"
-              className="text-lg hover:text-[#A855F7] transition-colors cursor-pointer"
+              className="text-lg hover:text-[#F97316] transition-colors cursor-pointer"
             />
             <Iconify
               icon="mdi:zodiac-virgo"
-              className="text-lg hover:text-[#A855F7] transition-colors cursor-pointer"
+              className="text-lg hover:text-[#F97316] transition-colors cursor-pointer"
             />
             <Iconify
               icon="mdi:zodiac-libra"
-              className="text-lg hover:text-[#A855F7] transition-colors cursor-pointer"
+              className="text-lg hover:text-[#F97316] transition-colors cursor-pointer"
             />
             <Iconify
               icon="mdi:zodiac-scorpio"
-              className="text-lg hover:text-[#A855F7] transition-colors cursor-pointer"
+              className="text-lg hover:text-[#F97316] transition-colors cursor-pointer"
             />
             <Iconify
               icon="mdi:zodiac-sagittarius"
-              className="text-lg hover:text-[#A855F7] transition-colors cursor-pointer"
+              className="text-lg hover:text-[#F97316] transition-colors cursor-pointer"
             />
             <Iconify
               icon="mdi:zodiac-capricorn"
-              className="text-lg hover:text-[#A855F7] transition-colors cursor-pointer"
+              className="text-lg hover:text-[#F97316] transition-colors cursor-pointer"
             />
             <Iconify
               icon="mdi:zodiac-aquarius"
-              className="text-lg hover:text-[#A855F7] transition-colors cursor-pointer"
+              className="text-lg hover:text-[#F97316] transition-colors cursor-pointer"
             />
             <Iconify
               icon="mdi:zodiac-pisces"
-              className="text-lg hover:text-[#A855F7] transition-colors cursor-pointer"
+              className="text-lg hover:text-[#F97316] transition-colors cursor-pointer"
             />
           </div>
         </div>

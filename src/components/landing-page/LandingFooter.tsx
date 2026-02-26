@@ -1,7 +1,7 @@
 "use client";
 
 import Iconify from "@/src/components/Iconify";
-import { getAuthToken } from "@/src/lib/auth";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -17,7 +17,7 @@ export default function LandingFooter() {
     return null;
   }
   return (
-    <footer className="relative bg-[#07080f] border-t border-[#A855F7]/20 pt-16 pb-6 overflow-hidden">
+    <footer className="relative bg-[#07080f] border-t border-[#F97316]/20 pt-16 pb-6 overflow-hidden">
       {/* Background Grid Pattern */}
       <div
         className="absolute inset-0 z-0 opacity-[0.02]"
@@ -36,7 +36,7 @@ export default function LandingFooter() {
         style={{
           filter: "blur(120px)",
           background:
-            "radial-gradient(ellipse, rgba(168, 85, 247, 0.05) 0%, transparent 70%)",
+            "radial-gradient(ellipse, rgba(249, 115, 22, 0.05) 0%, transparent 70%)",
         }}
       ></div>
 
@@ -46,19 +46,13 @@ export default function LandingFooter() {
           {/* Column 1: Brand & Info */}
           <div className="w-full lg:w-4/12 flex flex-col gap-6">
             {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#A855F7] to-[#8B5CF6] flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.5)]">
-                <Iconify
-                  icon="ph:sparkle-fill"
-                  className="text-white text-lg"
-                />
-              </div>
-              <span className="text-xl font-bold text-white tracking-tight">
-                Astrology{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F472B6] to-[#A855F7]">
-                  Service
-                </span>
-              </span>
+            <div className="relative h-[50px] w-[200px] bg-white/95 rounded-[12px] shadow-[0_0_15px_rgba(255,255,255,0.1)] px-2">
+              <Image
+                src="/image/horozontal_logo.png"
+                alt="Astrology Web Logo"
+                fill
+                className="object-contain p-2"
+              />
             </div>
 
             <p className="text-gray-400 text-[13px] leading-relaxed max-w-[320px]">
@@ -72,25 +66,25 @@ export default function LandingFooter() {
             <div className="flex items-center gap-3 mt-2">
               <a
                 href="#"
-                className="w-9 h-9 rounded-lg bg-[#111116] border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-[#A855F7]/50 hover:bg-[#1A1A24] transition-all"
+                className="w-9 h-9 rounded-lg bg-[#1E293B] border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-[#F97316]/50 hover:bg-[#1A1A24] transition-all"
               >
                 <Iconify icon="fa6-brands:twitter" className="text-sm" />
               </a>
               <a
                 href="#"
-                className="w-9 h-9 rounded-lg bg-[#111116] border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-[#A855F7]/50 hover:bg-[#1A1A24] transition-all"
+                className="w-9 h-9 rounded-lg bg-[#1E293B] border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-[#F97316]/50 hover:bg-[#1A1A24] transition-all"
               >
                 <Iconify icon="fa6-brands:facebook-f" className="text-sm" />
               </a>
               <a
                 href="#"
-                className="w-9 h-9 rounded-lg bg-[#111116] border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-[#A855F7]/50 hover:bg-[#1A1A24] transition-all"
+                className="w-9 h-9 rounded-lg bg-[#1E293B] border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-[#F97316]/50 hover:bg-[#1A1A24] transition-all"
               >
                 <Iconify icon="fa6-brands:youtube" className="text-sm" />
               </a>
               <a
                 href="#"
-                className="w-9 h-9 rounded-lg bg-[#111116] border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-[#A855F7]/50 hover:bg-[#1A1A24] transition-all"
+                className="w-9 h-9 rounded-lg bg-[#1E293B] border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-[#F97316]/50 hover:bg-[#1A1A24] transition-all"
               >
                 <Iconify icon="ph:globe" className="text-lg" />
               </a>
@@ -102,7 +96,7 @@ export default function LandingFooter() {
             {/* Column 2: Quick Links */}
             <div className="flex flex-col gap-5 min-w-[150px]">
               <h4 className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest text-white uppercase">
-                <Iconify icon="ph:sparkle-fill" className="text-[#A855F7]" />{" "}
+                <Iconify icon="ph:sparkle-fill" className="text-[#F97316]" />{" "}
                 Quick Links
               </h4>
               <ul className="flex flex-col gap-3">
@@ -111,7 +105,7 @@ export default function LandingFooter() {
                     href="#"
                     className="text-[13px] text-gray-400 hover:text-white flex items-center gap-2 transition-colors group"
                   >
-                    <span className="text-[#A855F7] opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="text-[#F97316] opacity-0 group-hover:opacity-100 transition-opacity">
                       →
                     </span>{" "}
                     Terms & Condition
@@ -122,7 +116,7 @@ export default function LandingFooter() {
                     href="#"
                     className="text-[13px] text-gray-400 hover:text-white flex items-center gap-2 transition-colors group"
                   >
-                    <span className="text-[#A855F7] opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="text-[#F97316] opacity-0 group-hover:opacity-100 transition-opacity">
                       →
                     </span>{" "}
                     Privacy Policy
@@ -133,7 +127,7 @@ export default function LandingFooter() {
                     href="#"
                     className="text-[13px] text-gray-400 hover:text-white flex items-center gap-2 transition-colors group"
                   >
-                    <span className="text-[#A855F7] opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="text-[#F97316] opacity-0 group-hover:opacity-100 transition-opacity">
                       →
                     </span>{" "}
                     Pricing Policy
@@ -144,7 +138,7 @@ export default function LandingFooter() {
                     href="#"
                     className="text-[13px] text-gray-400 hover:text-white flex items-center gap-2 transition-colors group"
                   >
-                    <span className="text-[#A855F7] opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="text-[#F97316] opacity-0 group-hover:opacity-100 transition-opacity">
                       →
                     </span>{" "}
                     About Us
@@ -157,7 +151,7 @@ export default function LandingFooter() {
             <div className="flex flex-col gap-8 flex-grow max-w-[300px]">
               {/* Pages List */}
               <div className="flex flex-col gap-5">
-                <h4 className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest text-[#F472B6] uppercase">
+                <h4 className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest text-[#FBBF24] uppercase">
                   <Iconify icon="ph:sparkle-fill" /> Pages
                 </h4>
                 <ul className="flex flex-col gap-3">
@@ -166,7 +160,7 @@ export default function LandingFooter() {
                       href="#"
                       className="text-[13px] text-gray-400 hover:text-white flex items-center gap-2 transition-colors group"
                     >
-                      <span className="text-[#F472B6] opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span className="text-[#FBBF24] opacity-0 group-hover:opacity-100 transition-opacity">
                         →
                       </span>{" "}
                       Kundali Plan
@@ -177,7 +171,7 @@ export default function LandingFooter() {
                       href="#"
                       className="text-[13px] text-gray-400 hover:text-white flex items-center gap-2 transition-colors group"
                     >
-                      <span className="text-[#F472B6] opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span className="text-[#FBBF24] opacity-0 group-hover:opacity-100 transition-opacity">
                         →
                       </span>{" "}
                       Login / Register
@@ -195,11 +189,11 @@ export default function LandingFooter() {
                   <input
                     type="email"
                     placeholder="your@email.com"
-                    className="w-full bg-[#111116] border border-white/10 rounded-xl px-4 py-3 text-[13px] text-white placeholder:text-gray-600 focus:outline-none focus:border-[#A855F7]/50 focus:bg-[#1A1A24] transition-colors"
+                    className="w-full bg-[#1E293B] border border-white/10 rounded-xl px-4 py-3 text-[13px] text-white placeholder:text-gray-600 focus:outline-none focus:border-[#F97316]/50 focus:bg-[#1A1A24] transition-colors"
                   />
                   <button
                     type="submit"
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#A855F7] to-[#8B5CF6] text-white text-[13px] font-bold hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all flex items-center justify-center gap-2"
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white text-[13px] font-bold hover:shadow-[0_0_20px_rgba(249, 115, 22,0.4)] transition-all flex items-center justify-center gap-2"
                   >
                     Subscribe{" "}
                     <Iconify icon="ph:sparkle-fill" className="text-[10px]" />
@@ -214,7 +208,7 @@ export default function LandingFooter() {
         <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-white/5 gap-4">
           <p className="text-[11px] text-gray-500 font-medium">
             © {currentYear}{" "}
-            <span className="text-[#F472B6] font-bold">Astrology Service</span>{" "}
+            <span className="text-[#FBBF24] font-bold">Astrology Service</span>{" "}
             — Crafted with{" "}
             <Iconify
               icon="ph:heart-fill"

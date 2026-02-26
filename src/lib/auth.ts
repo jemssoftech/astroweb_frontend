@@ -4,6 +4,10 @@ export const getAuthToken = () => {
   return Cookies.get("accessToken");
 };
 
+export const getRefreshToken = () => {
+  return Cookies.get("refreshToken");
+};
+
 export const getUser = () => {
   if (typeof window !== "undefined") {
     const user = localStorage.getItem("user");

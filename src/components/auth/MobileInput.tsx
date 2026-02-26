@@ -30,72 +30,96 @@ export default function MobileInput({
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 h-full min-h-[500px]">
+    <div className="grid grid-cols-1 md:grid-cols-2 h-full min-h-[600px] bg-[#0F172A]">
       {/* Left Side: Info */}
-      <div className="bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-950 p-10 flex flex-col justify-center text-white relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-white opacity-5 blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-purple-500 opacity-10 blur-3xl"></div>
+      <div className="bg-[#0A0A0E] p-10 flex flex-col justify-center text-white relative overflow-hidden border-r border-white/5 order-1">
+        {/* Decorative elements - stars/universe feel */}
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-[#EA580C] opacity-10 blur-[80px]"></div>
+        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-[#F97316] opacity-10 blur-[80px]"></div>
 
-        <div className="relative z-10">
-          <div className="flex items-center gap-2 mb-8">
-            <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
+          <div className="w-[280px] h-[280px] mb-8 relative rounded-full border border-white/10 flex items-center justify-center bg-[#0F172A]/50 shadow-[0_0_50px_rgba(234,88,12,0.1)]">
+            {/* Simulated astrology wheel */}
+            <div className="absolute inset-0 rounded-full border border-dashed border-white/20 animate-[spin_60s_linear_infinite]" />
+            <div className="absolute inset-4 rounded-full border border-white/5 animate-[spin_40s_linear_infinite_reverse]" />
+            <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-[#EA580C] to-[#FBBF24] flex items-center justify-center shadow-[0_0_30px_rgba(249,115,22,0.4)] z-10">
               <Iconify
-                icon="mdi:star-four-points"
-                className="text-yellow-400 text-xl"
+                icon="mdi:crystal-ball"
+                className="text-3xl text-white"
               />
             </div>
-            <span className="font-bold text-xl tracking-wider">AstroLearn</span>
           </div>
 
-          <h2 className="text-4xl font-extrabold mb-4 leading-tight">
-            Unlock the Secrets <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500">
-              Of The Stars
-            </span>
+          <h2 className="text-3xl font-extrabold mb-3 leading-tight tracking-tight">
+            Begin Your <br />
+            Cosmic Journey
           </h2>
-          <p className="text-indigo-200 text-lg leading-relaxed max-w-sm mb-8">
-            Join our community to discover your cosmic blueprint and explore
-            astrology with expert guidance.
+          <p className="text-slate-400 text-sm leading-relaxed max-w-sm mb-8">
+            Join thousands of seekers exploring the universe through astrology,
+            birth charts, and planetary wisdom.
           </p>
 
-          <div className="flex items-center gap-4 text-sm text-indigo-300">
-            <div className="flex -space-x-3">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="w-10 h-10 rounded-full border-2 border-indigo-900 bg-indigo-500 flex items-center justify-center overflow-hidden"
-                >
-                  <Iconify icon="mdi:user" className="text-indigo-200" />
-                </div>
-              ))}
+          <div className="flex flex-col gap-3 w-full max-w-[280px]">
+            <div className="flex items-center gap-3 bg-white/5 border border-white/5 rounded-xl px-4 py-3">
+              <div className="w-8 h-8 rounded-lg bg-[#EA580C]/20 flex items-center justify-center shrink-0">
+                <Iconify
+                  icon="ph:sparkle-fill"
+                  className="text-[#F97316] text-sm"
+                />
+              </div>
+              <span className="text-xs text-slate-300 font-medium text-left">
+                Personalized birth chart analysis
+              </span>
             </div>
-            <span>Join 10,000+ members</span>
+            <div className="flex items-center gap-3 bg-white/5 border border-white/5 rounded-xl px-4 py-3">
+              <div className="w-8 h-8 rounded-lg bg-[#FBBF24]/20 flex items-center justify-center shrink-0">
+                <Iconify
+                  icon="ph:moon-stars-fill"
+                  className="text-[#FBBF24] text-sm"
+                />
+              </div>
+              <span className="text-xs text-slate-300 font-medium text-left">
+                Daily horoscope & moon readings
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Right Side: Form */}
-      <div className="p-10 flex flex-col justify-center bg-white">
+      <div className="p-10 flex flex-col justify-center bg-[#0F172A] order-2">
         <div className="max-w-md w-full mx-auto">
           <div className="mb-8">
-            <h3 className="text-3xl font-bold text-gray-900 mb-2">
-              Welcome Back
+            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-6">
+              <div className="w-5 h-5 rounded-md bg-[#EA580C] flex items-center justify-center shadow-[0_0_10px_rgba(234,88,12,0.5)]">
+                <Iconify
+                  icon="ph:sparkle-fill"
+                  className="text-white text-[10px]"
+                />
+              </div>
+              <span className="text-xs font-bold text-white tracking-wide">
+                Astrology API
+              </span>
+            </div>
+            <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">
+              Create your account 🚀
             </h3>
-            <p className="text-gray-500">Sign in to continue your journey.</p>
+            <p className="text-slate-400 text-sm">
+              Start your astrological journey today — it&apos;s free!
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label
                 htmlFor="mobile"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-xs font-bold text-white mb-2"
               >
-                Mobile Number
+                Mobile Number <span className="text-[#EA580C]">*</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <span className="text-gray-500 sm:text-sm font-medium">
+                <div className="absolute inset-y-0 left-0 pl-4 w-[60px] flex items-center justify-center border-r border-white/10">
+                  <span className="text-slate-400 sm:text-sm font-bold text-[13px]">
                     +91
                   </span>
                 </div>
@@ -107,45 +131,31 @@ export default function MobileInput({
                     const val = e.target.value.replace(/\D/g, "");
                     if (val.length <= 10) setNumber(val);
                   }}
-                  className={`block w-full pl-12 pr-3 py-3 sm:text-lg border rounded-xl focus:ring-4 focus:outline-none transition-all ${
+                  className={`block w-full pl-[76px] pr-4 py-3.5 sm:text-sm bg-[#1E293B] text-white border rounded-xl focus:ring-4 focus:outline-none transition-all placeholder:text-slate-500 ${
                     error
-                      ? "border-red-300 focus:border-red-500 focus:ring-red-500/20"
-                      : "border-gray-200 focus:border-indigo-500 focus:ring-indigo-500/20 hover:border-gray-300"
+                      ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/20"
+                      : "border-white/10 focus:border-[#EA580C] focus:ring-[#EA580C]/20 hover:border-white/20"
                   }`}
-                  placeholder="Enter your 10 digit number"
+                  placeholder="Enter mobile number"
                 />
               </div>
-              {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+              {error && <p className="mt-2 text-xs text-red-400">{error}</p>}
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-sm text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-70 disabled:cursor-not-allowed transition-all"
+              className="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-[0_0_20px_rgba(234,88,12,0.3)] text-[14px] font-bold text-white bg-gradient-to-r from-[#F97316] to-[#EA580C] hover:from-[#EA580C] hover:to-[#C2410C] focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-offset-[#0F172A] focus:ring-[#EA580C]/50 disabled:opacity-70 disabled:cursor-not-allowed transition-all"
             >
               {loading ? (
-                <Iconify icon="mdi:loading" className="animate-spin text-2xl" />
+                <Iconify icon="mdi:loading" className="animate-spin text-xl" />
               ) : (
-                "Send OTP"
+                <span className="flex items-center gap-2">
+                  <Iconify icon="ph:sparkle-fill" className="text-xs" /> Next
+                  Step
+                </span>
               )}
             </button>
-            <p className="text-center text-sm text-gray-500 mt-4">
-              By signing in, you agree to our{" "}
-              <a
-                href="#"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Terms of Service
-              </a>{" "}
-              and{" "}
-              <a
-                href="#"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Privacy Policy
-              </a>
-              .
-            </p>
           </form>
         </div>
       </div>

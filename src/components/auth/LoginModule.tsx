@@ -12,7 +12,7 @@ export default function LoginModule() {
   const [mobileNumber, setMobileNumber] = useState("");
   const [loading, setLoading] = useState(false);
   const [verificationId, setverificationId] = useState("");
-  console.log(verificationId || "");
+
   // Placeholder API function for sending OTP
   const sendOtp = async (number: string) => {
     setLoading(true);
@@ -58,7 +58,6 @@ export default function LoginModule() {
         body: JSON.stringify(payload),
       });
       const data = await response.json();
-      console.log(data?.data);
       const userAuth = data;
       if (userAuth.status === 1 || userAuth.data?.status === 1) {
         // We now also receive the user tokens through data.userAuth from the proxy route
@@ -93,7 +92,7 @@ export default function LoginModule() {
             );
 
             // Redirect to home/dashboard
-            router.push("/");
+            router.push("/dashboard");
           } else if (data.error) {
             toast.error(data.error);
           } else {
@@ -119,9 +118,30 @@ export default function LoginModule() {
   const handleResend = async () => {
     setLoading(true);
     // Simulate resend API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setLoading(false);
-    toast.success("OTP Resent!");
+    try {
+      const payload = {
+        countryCode: "91",
+        fcm: Math.random().toString(36).substring(2, 12), // Auto-generates a random 10-character alphanumeric string
+        mobileNumber: mobileNumber,
+        user_type: "vendor",
+        isMobile: true,
+      };
+      const response = await fetch("/api/resend-otp", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      if (data.status === 1) {
+        toast.success("OTP Resent!");
+        setverificationId(data?.verificationId);
+        setLoading(false);
+        setStep("otp");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const goBack = () => {
@@ -135,7 +155,7 @@ export default function LoginModule() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden min-h-[500px] relative">
+    <div className="container xl:max-w-[1440px] mx-auto bg-white rounded-3xl shadow-xl overflow-hidden min-h-[500px] relative">
       <AnimatePresence mode="wait">
         {step === "mobile" ? (
           <motion.div

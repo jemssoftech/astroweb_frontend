@@ -10,7 +10,7 @@ export default function LandingReviews() {
       logoColor: "text-white",
       logoBg: "bg-red-500",
       review: `"AstroSahi made our astrology consultation app faster and more reliable than ever. The integration was smooth, and the accuracy is impressive!"`,
-      starsColor: "text-[#A855F7]", // Purple
+      starsColor: "text-[#F97316]", // Purple
       userName: "Rohit Verma",
       userRole: "Founder, AstroSahi",
       avatarSrc: "https://i.pravatar.cc/150?img=11",
@@ -22,7 +22,7 @@ export default function LandingReviews() {
       logoColor: "text-white",
       logoBg: "bg-orange-500",
       review: `"AstroExpertVoice transformed our astrology consultation platform. Reliable and easy to integrate – the results spoke for themselves from day one!"`,
-      starsColor: "text-[#EC4899]", // Pink
+      starsColor: "text-[#F59E0B]", // Pink
       userName: "Rahul Mehta",
       userRole: "Founder, AstroExpertVoice",
       avatarSrc: "https://i.pravatar.cc/150?img=33",
@@ -70,7 +70,7 @@ export default function LandingReviews() {
       logoColor: "text-white",
       logoBg: "bg-rose-500",
       review: `"DivineHealingCare has transformed our spiritual consultation process. The integration was smooth, and support was absolutely exceptional!"`,
-      starsColor: "text-[#A855F7]", // Purple
+      starsColor: "text-[#F97316]", // Purple
       userName: "Priya Sharma",
       userRole: "Founder, DivineHealingCare",
       avatarSrc: "https://i.pravatar.cc/150?img=32",
@@ -116,7 +116,7 @@ export default function LandingReviews() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#18112A] border border-[#2D1B4E] mb-6 shadow-[0_0_15px_rgba(45,27,78,0.5)]">
             <Iconify
               icon="ph:star-four-fill"
-              className="text-[#A855F7] text-xs"
+              className="text-[#F97316] text-xs"
             />
             <span className="text-[#D8B4FE] text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase">
               REAL CUSTOMER REVIEWS
@@ -125,7 +125,7 @@ export default function LandingReviews() {
 
           <h2 className="text-[2.5rem] md:text-[3.5rem] font-bold text-white mb-6 tracking-tight leading-[1.1]">
             What our customers <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F472B6] to-[#A855F7]">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FBBF24] to-[#F97316]">
               are saying
             </span>
           </h2>
@@ -142,7 +142,7 @@ export default function LandingReviews() {
           {reviews.map((review, index) => (
             <div
               key={index}
-              className={`relative bg-[#0F0F13]/60 backdrop-blur-sm rounded-2xl p-8 flex flex-col text-left transition-all ${review.highlight ? "border border-[#3B82F6]/50 shadow-[0_0_25px_rgba(59,130,246,0.15)] bg-[#10192C]/80" : "border border-white/5 shadow-lg hover:bg-[#15151A]"}`}
+              className={`relative bg-[#1E293B]/60 backdrop-blur-sm rounded-2xl p-8 flex flex-col text-left transition-all ${review.highlight ? "border border-[#3B82F6]/50 shadow-[0_0_25px_rgba(59,130,246,0.15)] bg-[#10192C]/80" : "border border-white/5 shadow-lg hover:bg-[#15151A]"}`}
             >
               {/* Number */}
               <span
@@ -207,8 +207,8 @@ export default function LandingReviews() {
 
         {/* Bottom Pill */}
         <div className="flex justify-center pb-8 ">
-          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#111116] border border-[#2D1B4E] hover:bg-[#16161D] transition-all cursor-pointer shadow-[0_0_20px_rgba(45,27,78,0.2)] hover:shadow-[0_0_25px_rgba(45,27,78,0.4)] hover:scale-[1.02]">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#A855F7] animate-pulse"></div>
+          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1E293B] border border-[#2D1B4E] hover:bg-[#1E293B] transition-all cursor-pointer shadow-[0_0_20px_rgba(45,27,78,0.2)] hover:shadow-[0_0_25px_rgba(45,27,78,0.4)] hover:scale-[1.02]">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#F97316] animate-pulse"></div>
             <span className="text-gray-400 text-[13px]">
               Trusted by 500+ astrology platforms worldwide —
             </span>
