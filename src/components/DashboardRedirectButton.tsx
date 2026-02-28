@@ -21,8 +21,7 @@ export default function DashboardRedirectButton() {
 
       if (response.ok && data.token) {
         // 2. Redirect to Domain B's unauthenticated callback route with the token
-        // window.location.href = `http://localhost:3002/auth-callback?token=${data.token}`;
-        console.log(data.token);
+        window.location.href = `http://localhost:3002/auth-callback?token=${data.token}`;
       } else {
         console.error("Failed to generate token:", data.error);
         alert("Could not redirect to dashboard.");
