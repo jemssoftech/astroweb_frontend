@@ -1,10 +1,18 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Iconify from "@/src/components/Iconify";
 import { getAuthToken, getUser } from "@/src/lib/auth";
 import WalletTopUp from "@/src/components/dashboard/WalletTopUp";
 import { fetchWithAuth } from "@/src/lib/fetchWithAuth";
 import api from "@/src/lib/api";
+
+interface HistoryItem {
+  id: string;
+  amount: number;
+  type: "credit" | "debit";
+  description: string;
+  createdAt: string;
+}
 
 // Animated Counter Component
 const AnimatedCounter = ({
@@ -121,9 +129,8 @@ const PDFCard = ({
 );
 
 // Mini Chart Component
-const MiniChart = () => {
-  const data = [40, 65, 45, 80, 55, 90, 70, 85, 60, 95, 75, 88];
-  const maxValue = Math.max(...data);
+const MiniChart = ({ data }: { data: number[] }) => {
+  const maxValue = Math.max(...data, 10);
 
   return (
     <div className="flex items-end gap-1 h-16">
@@ -135,7 +142,7 @@ const MiniChart = () => {
             height: `${(value / maxValue) * 100}%`,
             animationDelay: `${index * 50}ms`,
           }}
-          title={`Day ${index + 1}: ${value} calls`}
+          title={`Value: ${value}`}
         />
       ))}
     </div>
@@ -159,46 +166,85 @@ export default function DashboardPage() {
   const [walletBalance, setWalletBalance] =
     useState<WalletBalanceResponse | null>(null);
   // API Usage state
-  const [remainingCredits, setRemainingCredits] = useState<number | null>(null);
+  // Usage state
   const [usedCredits, setUsedCredits] = useState<number | null>(null);
   const [totalCredits, setTotalCredits] = useState<number | null>(null);
-  const [usageLoading, setUsageLoading] = useState(true);
+
+  // Real-time chart & today stats
+  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [todayUsage, setTodayUsage] = useState(0);
 
   // Fetch API usage via REST API
   useEffect(() => {
     if (!token) return;
 
-    const fetchWalletBalance = async () => {
+    const fetchData = async () => {
       try {
-        const { data } = await api.get("/api/wallet/balance");
-        setWalletBalance(data);
+        const [{ data: balanceData }, { data: historyData }] =
+          await Promise.all([
+            api.get("/api/wallet/balance"),
+            api.get("/api/wallet/history?limit=100"),
+          ]);
 
-        // Update the legacy usage state variables to keep the UI in sync
-        if (data && data.success !== false) {
-          setRemainingCredits(data.remainingCredits ?? 0);
-          setUsedCredits(data.usedCredits ?? 0);
-          setTotalCredits(data.totalCredits ?? 0);
+        setWalletBalance(balanceData);
+        if (balanceData && balanceData.success !== false) {
+          setUsedCredits(balanceData.usedCredits ?? 0);
+          setTotalCredits(balanceData.totalCredits ?? 0);
+        }
+
+        if (historyData?.history) {
+          setHistory(historyData.history);
+
+          // Calculate Today's Usage
+          const today = new Date().toLocaleDateString();
+          const todayCredits = historyData.history
+            .filter(
+              (h: HistoryItem) =>
+                h.type === "debit" &&
+                new Date(h.createdAt).toLocaleDateString() === today,
+            )
+            .reduce(
+              (acc: number, h: HistoryItem) => acc + Math.abs(h.amount),
+              0,
+            );
+          setTodayUsage(Math.round(todayCredits));
         }
       } catch (err) {
-        console.error("Failed to fetch wallet balance:", err);
-        // Fallback or error state
-        setRemainingCredits(0);
-        setUsedCredits(0);
-        setTotalCredits(0);
-      } finally {
-        setUsageLoading(false);
+        console.error("Failed to fetch dashboard data:", err);
       }
     };
 
-    fetchWalletBalance();
+    fetchData();
   }, [token]);
+
+  // Process history for MiniChart (last 14 days)
+  const miniChartData = useMemo(() => {
+    const dailyMap: Record<string, number> = {};
+    const last14Days = Array.from({ length: 14 }, (_, i) => {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      return d.toLocaleDateString();
+    }).reverse();
+
+    last14Days.forEach((date) => (dailyMap[date] = 0));
+    history
+      .filter((h) => h.type === "debit")
+      .forEach((h) => {
+        const date = new Date(h.createdAt).toLocaleDateString();
+        if (dailyMap[date] !== undefined) {
+          dailyMap[date] += Math.abs(h.amount);
+        }
+      });
+
+    return last14Days.map((date) => Math.round(dailyMap[date]));
+  }, [history]);
 
   // Computed values for API usage
   const usagePercent =
     totalCredits && totalCredits > 0
       ? Math.round((usedCredits! / totalCredits) * 100)
       : 0;
-  console.log(walletBalance);
+
   useEffect(() => {
     const hour = new Date().getHours();
     if (hour < 12) setGreeting("Good Morning");
@@ -228,7 +274,7 @@ export default function DashboardPage() {
       const res = await response.json();
       console.log(res);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -297,7 +343,7 @@ export default function DashboardPage() {
                 !
               </h1>
               <p className="text-blue-100/80 text-sm md:text-base">
-                Here's what's happening with your API usage today.
+                Here&apos;s what&apos;s happening with your API usage today.
               </p>
             </div>
 
@@ -318,9 +364,9 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard
             icon="lucide:cloud"
-            title="Total API Calls"
-            value={usedCredits !== null ? String(usedCredits) : "--"}
-            subtitle="This month"
+            title="Usage Today"
+            value={String(todayUsage)}
+            subtitle="Last 24 hours"
             color="from-blue-500 to-blue-600"
           />
           <StatCard
@@ -399,8 +445,8 @@ export default function DashboardPage() {
                             : "text-emerald-600"
                       }`}
                     >
-                      {remainingCredits !== null
-                        ? `${remainingCredits} remaining`
+                      {totalCredits !== null && usedCredits !== null
+                        ? `${totalCredits - usedCredits} remaining`
                         : "Loading..."}
                     </span>
                   </div>
@@ -542,31 +588,13 @@ export default function DashboardPage() {
                   <span>0</span>
                 </div>
 
-                {/* Chart */}
-                <div className="ml-8 h-full flex flex-col">
-                  <div className="flex-1 flex items-end gap-1 border-b border-gray-100 pb-2">
-                    {Array.from({ length: 28 }, (_, i) => {
-                      const height = Math.random() * 80 + 20;
-                      return (
-                        <div
-                          key={i}
-                          className="flex-1 bg-gradient-to-t from-blue-500 to-blue-400 rounded-t hover:from-blue-600 hover:to-blue-500 transition-all duration-200 cursor-pointer group relative"
-                          style={{ height: `${height}%` }}
-                        >
-                          <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                            {Math.floor(height)} calls
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                {/* Chart Area */}
+                <div className="ml-8 h-full flex flex-col justify-end">
+                  <MiniChart data={miniChartData} />
                   {/* X-axis labels */}
                   <div className="flex justify-between text-xs text-gray-400 font-medium pt-2">
-                    <span>Feb 1</span>
-                    <span>Feb 7</span>
-                    <span>Feb 14</span>
-                    <span>Feb 21</span>
-                    <span>Feb 28</span>
+                    <span>-14 Days</span>
+                    <span>Today</span>
                   </div>
                 </div>
               </div>

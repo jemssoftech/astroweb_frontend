@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
           const decryptedString = decryptData(data.encryptedData, data.iv);
           // Assuming the decrypted string is JSON, parse it back into an object
           data = JSON.parse(decryptedString);
-          console.log(data, "data");
+ 
           if (data?.status === 1) {
             const payload = {
               mobileNumber: data?.mobileNumber || data?.data?.mobileNumber,

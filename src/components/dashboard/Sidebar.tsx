@@ -129,7 +129,7 @@ export default function Sidebar() {
   ];
 
   const apiNavItems = [
-    { href: "/dashboard/api-keys", label: "API Keys", icon: "lucide:key" },
+    // { href: "/dashboard/api-keys", label: "API Keys", icon: "lucide:key" },
     { href: "/dashboard/usage", label: "API Usage", icon: "lucide:activity" },
     {
       href: "/dashboard/pdf-credits",

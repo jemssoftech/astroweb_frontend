@@ -87,8 +87,6 @@ export default function ComingSoonPage() {
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
-      // Add your subscription logic here
-      console.log("Subscribed:", email);
       setIsSubscribed(true);
       setEmail("");
     }

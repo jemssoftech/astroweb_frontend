@@ -33,6 +33,9 @@ export default function WalletTopUp() {
       const { data } = await api.get("/api/wallet/balance");
       // Store balance directly in rupees, as backend sends remainingBalanceRupees
       setWallet({ balance: data.remainingBalanceRupees || 0, currency: "INR" });
+
+      // Notify other components (like Navbar) that the wallet state changed
+      window.dispatchEvent(new Event("wallet:update"));
     } catch (err: unknown) {
       const msg =
         err instanceof Error ? err.message : "Could not load wallet balance.";

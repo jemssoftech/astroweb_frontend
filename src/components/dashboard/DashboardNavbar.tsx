@@ -7,7 +7,40 @@ import { getUser, logout } from "@/src/lib/auth";
 
 export default function DashboardNavbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [balance, setBalance] = useState<number | null>(null);
   const user = getUser();
+
+  // Fetch true balance from API, fallback to localStorage user object if it fails
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      try {
+        const response = await fetch("/api/wallet/balance");
+        if (response.ok) {
+          const data = await response.json();
+          // Fallback safely to 0 if API is valid but remainingBalanceRupees is undefined
+          setBalance(data.remainingBalanceRupees || 0);
+        } else {
+          setBalance(user?.remainingBalanceRupees || 0);
+        }
+      } catch (error) {
+        console.error("Failed to fetch balance in navbar", error);
+        setBalance(user?.remainingBalanceRupees || 0);
+      }
+    };
+    // Initial fetch
+    fetchBalance();
+
+    // Listen for custom top-up events
+    const handleWalletUpdate = () => {
+      fetchBalance();
+    };
+    window.addEventListener("wallet:update", handleWalletUpdate);
+
+    return () => {
+      window.removeEventListener("wallet:update", handleWalletUpdate);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -32,7 +65,7 @@ export default function DashboardNavbar() {
   const handleLogout = () => {
     logout();
   };
-  console.log(user);
+
   return (
     <nav className="w-full bg-[#0F172A] border-b border-white/5  flex items-center px-4 sm:px-6 py-2 sm:py-4 lg:py-6 lg:px-8 justify-between z-40 sticky top-0">
       {/* Left side can be breadcrumbs or page title, leaving blank or simple for now */}
@@ -48,7 +81,7 @@ export default function DashboardNavbar() {
         >
           <Iconify icon="lucide:wallet" className="text-emerald-500 text-sm" />
           <span className="text-sm font-bold text-emerald-400">
-            ₹{user?.remainingBalanceRupees?.toLocaleString() || 0}
+            ₹{balance !== null ? balance.toLocaleString() : "..."}
           </span>
         </Link>
 

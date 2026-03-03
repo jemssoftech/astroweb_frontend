@@ -32,11 +32,6 @@ export async function POST(req: NextRequest) {
     });
 
     const data = await backendRes.json();
-    console.log(
-      "[razorpay/create-order] Backend response:",
-      backendRes.status,
-      data,
-    );
 
     if (!backendRes.ok) {
       return NextResponse.json(

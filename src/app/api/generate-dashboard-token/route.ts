@@ -37,7 +37,7 @@ export async function POST() {
       }
 
       const data = await backendRes.json();
-      console.log(data);
+   
       accessToken = data.accessToken || data.access_token;
 
       if (!accessToken) {

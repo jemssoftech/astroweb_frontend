@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
+import Link from "next/link";
 import Iconify from "@/src/components/Iconify";
 import { getAuthToken, getUser } from "@/src/lib/auth";
 import { useSocket } from "@/src/context/SocketContext";
@@ -313,7 +314,7 @@ export default function ProfilePage() {
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-cyan-100/30 to-emerald-100/30 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4" />
       </div>
 
-      <div className="relative z-10 p-4 md:p-6 lg:p-8 max-w-[1000px] mx-auto space-y-6 mt-8">
+      <div className="relative z-10 p-4 md:p-6 lg:p-8  mx-auto space-y-6 mt-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
@@ -419,10 +420,99 @@ export default function ProfilePage() {
                   </span>
                   <span className="text-sm text-slate-400">.00</span>
                 </div>
-                <button className="w-full py-2.5 bg-white/10 hover:bg-white/20 rounded-xl text-sm font-semibold transition-colors flex items-center justify-center gap-2">
+                <Link
+                  href="/dashboard/wallet"
+                  className="w-full py-2.5 bg-white/10 hover:bg-white/20 rounded-xl text-sm font-semibold transition-colors flex items-center justify-center gap-2"
+                >
                   <Iconify icon="lucide:plus" className="text-lg" />
                   Add Funds
-                </button>
+                </Link>
+              </div>
+              {/* API Key Section */}
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:p-8">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-md shadow-orange-500/20">
+                      <Iconify
+                        icon="lucide:key-round"
+                        className="text-white text-lg"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900">
+                        API Key
+                      </h3>
+                      <p className="text-xs text-gray-500">
+                        Use this key to authenticate your API requests
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-slate-900 rounded-xl border border-slate-700 flex items-center gap-3">
+                  <code className="flex-1 text-sm font-mono text-emerald-400 truncate select-all">
+                    {(() => {
+                      const apiKey = profile.apikey || profile.api_key;
+                      if (!apiKey)
+                        return (
+                          <span className="text-slate-500 italic">
+                            No API key generated
+                          </span>
+                        );
+                      if (showFullKey) return apiKey;
+                      return (
+                        apiKey.substring(0, 8) +
+                        "••••••••••••••••" +
+                        apiKey.substring(apiKey.length - 4)
+                      );
+                    })()}
+                  </code>
+
+                  {/* Show/Hide toggle */}
+                  <button
+                    onClick={() => setShowFullKey(!showFullKey)}
+                    className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"
+                    title={showFullKey ? "Hide key" : "Show key"}
+                  >
+                    <Iconify
+                      icon={showFullKey ? "lucide:eye-off" : "lucide:eye"}
+                      className="text-lg"
+                    />
+                  </button>
+
+                  {/* Copy button */}
+                  <button
+                    onClick={handleCopyApiKey}
+                    disabled={!profile.apiKey && !profile.api_key}
+                    className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    title="Copy to clipboard"
+                  >
+                    <Iconify
+                      icon={copied ? "lucide:check" : "lucide:copy"}
+                      className={`text-lg ${copied ? "text-emerald-400" : ""}`}
+                    />
+                  </button>
+
+                  {/* Refresh button */}
+                  <button
+                    onClick={handleRefreshApiKey}
+                    disabled={refreshingKey}
+                    className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors disabled:opacity-40"
+                    title="Regenerate API key"
+                  >
+                    <Iconify
+                      icon="lucide:refresh-cw"
+                      className={`text-lg ${refreshingKey ? "animate-spin" : ""}`}
+                    />
+                  </button>
+                </div>
+
+                {copied && (
+                  <p className="text-xs text-emerald-500 font-medium mt-2 flex items-center gap-1">
+                    <Iconify icon="lucide:check-circle-2" className="text-sm" />
+                    Copied to clipboard!
+                  </p>
+                )}
               </div>
             </div>
 
@@ -667,158 +757,6 @@ export default function ProfilePage() {
                         : "Feb 2024"}
                     </div>
                   </div>
-                </div>
-              </div>
-
-              {/* API Key Section */}
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:p-8">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-md shadow-orange-500/20">
-                      <Iconify
-                        icon="lucide:key-round"
-                        className="text-white text-lg"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-gray-900">
-                        API Key
-                      </h3>
-                      <p className="text-xs text-gray-500">
-                        Use this key to authenticate your API requests
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-4 bg-slate-900 rounded-xl border border-slate-700 flex items-center gap-3">
-                  <code className="flex-1 text-sm font-mono text-emerald-400 truncate select-all">
-                    {(() => {
-                      const apiKey = profile.apikey || profile.api_key;
-                      if (!apiKey)
-                        return (
-                          <span className="text-slate-500 italic">
-                            No API key generated
-                          </span>
-                        );
-                      if (showFullKey) return apiKey;
-                      return (
-                        apiKey.substring(0, 8) +
-                        "••••••••••••••••" +
-                        apiKey.substring(apiKey.length - 4)
-                      );
-                    })()}
-                  </code>
-
-                  {/* Show/Hide toggle */}
-                  <button
-                    onClick={() => setShowFullKey(!showFullKey)}
-                    className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"
-                    title={showFullKey ? "Hide key" : "Show key"}
-                  >
-                    <Iconify
-                      icon={showFullKey ? "lucide:eye-off" : "lucide:eye"}
-                      className="text-lg"
-                    />
-                  </button>
-
-                  {/* Copy button */}
-                  <button
-                    onClick={handleCopyApiKey}
-                    disabled={!profile.apiKey && !profile.api_key}
-                    className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                    title="Copy to clipboard"
-                  >
-                    <Iconify
-                      icon={copied ? "lucide:check" : "lucide:copy"}
-                      className={`text-lg ${copied ? "text-emerald-400" : ""}`}
-                    />
-                  </button>
-
-                  {/* Refresh button */}
-                  <button
-                    onClick={handleRefreshApiKey}
-                    disabled={refreshingKey}
-                    className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors disabled:opacity-40"
-                    title="Regenerate API key"
-                  >
-                    <Iconify
-                      icon="lucide:refresh-cw"
-                      className={`text-lg ${refreshingKey ? "animate-spin" : ""}`}
-                    />
-                  </button>
-                </div>
-
-                {copied && (
-                  <p className="text-xs text-emerald-500 font-medium mt-2 flex items-center gap-1">
-                    <Iconify icon="lucide:check-circle-2" className="text-sm" />
-                    Copied to clipboard!
-                  </p>
-                )}
-              </div>
-
-              {/* Settings Overview */}
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:p-8">
-                <h3 className="text-lg font-bold text-gray-900 mb-6">
-                  Security & Preferences
-                </h3>
-
-                <div className="space-y-4">
-                  {[
-                    {
-                      icon: "lucide:shield-check",
-                      title: "Two-Factor Authentication",
-                      desc: "Add an extra layer of security",
-                      active: false,
-                    },
-                    {
-                      icon: "lucide:bell",
-                      title: "Email Notifications",
-                      desc: "Receive updates about API usage",
-                      active: true,
-                    },
-                    {
-                      icon: "lucide:key",
-                      title: "Change Password",
-                      desc: "Update your login credentials",
-                      action: "Update",
-                    },
-                  ].map((setting, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center justify-between p-4 rounded-xl border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-colors"
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                          <Iconify
-                            icon={setting.icon}
-                            className="text-blue-500 text-lg"
-                          />
-                        </div>
-                        <div>
-                          <h4 className="text-sm font-semibold text-gray-900">
-                            {setting.title}
-                          </h4>
-                          <p className="text-xs text-gray-500">
-                            {setting.desc}
-                          </p>
-                        </div>
-                      </div>
-                      {setting.action ? (
-                        <button className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
-                          {setting.action}
-                        </button>
-                      ) : (
-                        <div
-                          className={`w-11 h-6 rounded-full p-1 transition-colors cursor-pointer ${setting.active ? "bg-blue-500" : "bg-gray-200"}`}
-                        >
-                          <div
-                            className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${setting.active ? "translate-x-5" : "translate-x-0"}`}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  ))}
                 </div>
               </div>
             </div>
