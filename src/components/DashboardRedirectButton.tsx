@@ -39,11 +39,11 @@ export default function DashboardRedirectButton() {
       disabled={loading}
       className="group relative z-10 cursor-pointer flex items-center gap-4 px-5 py-[12px] rounded-lg transition-all font-semibold text-[15.5px] mx-4 text-[#98b0cf] hover:bg-white/5 hover:text-[#d3e0f0]"
     >
-      <div className="flex items-center justify-center w-6 h-6 text-[#98b0cf] group-hover:text-[#d3e0f0] transition-colors">
-        <Iconify icon="lucide:log-out" className="text-[20px] opacity-80" />
+      <div className="flex items-center justify-center w-6 h-6 text-slate-400 group-hover:text-[#d3e0f0] transition-colors">
+        <Iconify icon="lucide:book-open" className="text-[20px] opacity-80" />
       </div>
-      <span className="flex-1 tracking-wide text-left">
-        {loading ? "Redirecting safely..." : "View Docs"}
+      <span className="flex-1  text-[14px] text-left">
+        {loading ? "Redirecting safely..." : "Documentation"}
       </span>
     </button>
   );

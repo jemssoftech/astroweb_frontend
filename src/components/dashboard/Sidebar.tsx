@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Iconify from "../Iconify";
-import { logout, getUser } from "@/src/lib/auth";
+
 import Image from "next/image";
 import DashboardRedirectButton from "../DashboardRedirectButton";
 
@@ -111,11 +111,7 @@ const SectionHeader = ({ title }: { title: string }) => (
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const user = getUser();
   const [isCollapsed, setIsCollapsed] = useState(false);
-
-  // Wallet balance (you can get this from user or API)
-  const walletBalance = user?.wallet_balance || 0;
 
   const mainNavItems = [
     { href: "/dashboard", label: "Dashboard", icon: "lucide:layout-dashboard" },
@@ -144,16 +140,10 @@ export default function Sidebar() {
 
   const resourceNavItems = [
     {
-      href: "/dashboard/docs",
-      label: "Documentation",
-      icon: "lucide:book-open",
-    },
-    {
       href: "/dashboard/support",
       label: "Help & Support",
       icon: "lucide:headphones",
     },
-    { href: "/dashboard/settings", label: "Settings", icon: "lucide:settings" },
   ];
 
   return (
@@ -220,85 +210,6 @@ export default function Sidebar() {
           </button>
         </div>
 
-        {/* Wallet Balance Card */}
-        {!isCollapsed && (
-          <div className="mx-4 mt-2 p-4 rounded-2xl bg-gradient-to-br from-emerald-600/20 to-teal-600/20 border border-emerald-500/20 backdrop-blur-sm">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg shadow-emerald-500/30">
-                  <Iconify
-                    icon="lucide:wallet"
-                    className="text-white text-sm"
-                  />
-                </div>
-                <span className="text-xs font-medium text-slate-400">
-                  Wallet Balance
-                </span>
-              </div>
-              <Link
-                href="/dashboard/wallet"
-                className="p-1.5 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
-              >
-                <Iconify icon="lucide:external-link" className="text-sm" />
-              </Link>
-            </div>
-
-            <div className="flex items-baseline gap-1 mb-4">
-              <span className="text-2xl font-bold text-white">
-                ₹{walletBalance.toLocaleString()}
-              </span>
-              <span className="text-xs text-slate-400">.00</span>
-            </div>
-
-            <Link
-              href="/dashboard/wallet/topup"
-              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-sm font-semibold hover:shadow-lg hover:shadow-emerald-500/30 transition-all duration-300"
-            >
-              <Iconify icon="lucide:plus-circle" className="text-lg" />
-              Top Up Wallet
-            </Link>
-          </div>
-        )}
-
-        {/* Collapsed Wallet Icon */}
-        {isCollapsed && (
-          <div className="mx-3 mt-2 p-3 rounded-xl bg-gradient-to-br from-emerald-600/20 to-teal-600/20 border border-emerald-500/20">
-            <Link
-              href="/dashboard/wallet"
-              className="flex flex-col items-center gap-1"
-            >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg shadow-emerald-500/30">
-                <Iconify icon="lucide:wallet" className="text-white text-lg" />
-              </div>
-              <span className="text-[10px] font-bold text-emerald-400">
-                ₹{walletBalance}
-              </span>
-            </Link>
-          </div>
-        )}
-
-        {/* User Profile Card */}
-        {!isCollapsed && (
-          <div className="mx-4 mt-3 p-3 rounded-xl bg-slate-800/30 border border-slate-700/30">
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-purple-500/20">
-                  {user?.username?.charAt(0).toUpperCase() || "U"}
-                </div>
-                <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-slate-800" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-white truncate">
-                  {user?.username || "User"}
-                </p>
-                <p className="text-[11px] text-slate-400 truncate">
-                  {user?.email || "user@example.com"}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto overflow-x-hidden py-2 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
           {/* Main Section */}
@@ -344,45 +255,6 @@ export default function Sidebar() {
             ))}
           </div>
         </nav>
-
-        {/* Quick Stats */}
-        {!isCollapsed && (
-          <div className="mx-4 mb-3 p-3 rounded-xl bg-slate-800/30 border border-slate-700/30">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="text-center p-2 rounded-lg bg-slate-800/50">
-                <div className="text-lg font-bold text-white">500</div>
-                <div className="text-[10px] text-slate-400">API Calls</div>
-              </div>
-              <div className="text-center p-2 rounded-lg bg-slate-800/50">
-                <div className="text-lg font-bold text-amber-400">0</div>
-                <div className="text-[10px] text-slate-400">PDF Left</div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Footer */}
-        <div className="p-4 border-t border-slate-800/50">
-          {/* Logout Button */}
-          <button
-            onClick={logout}
-            className="group w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-all duration-300"
-          >
-            <div className="w-10 h-10 rounded-xl bg-slate-800/50 flex items-center justify-center group-hover:bg-red-500/20 transition-colors">
-              <Iconify icon="lucide:log-out" className="text-xl" />
-            </div>
-            {!isCollapsed && (
-              <span className="font-medium text-sm">Log out</span>
-            )}
-          </button>
-
-          {/* Copyright */}
-          {!isCollapsed && (
-            <p className="text-center text-[10px] text-slate-600 mt-3">
-              © 2024 Astro Web. All rights reserved.
-            </p>
-          )}
-        </div>
       </div>
     </aside>
   );

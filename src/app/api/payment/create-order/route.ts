@@ -6,7 +6,6 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    // Get token from Authorization header or fall back to accessToken cookie
     const authHeader = req.headers.get("authorization");
     const token = authHeader
       ? authHeader.replace("Bearer ", "")
@@ -19,35 +18,27 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Send token in multiple formats — backend may read from any of these
     const backendRes = await fetch(`${BACKEND_URL}/api/razorpay/create-order`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        "x-access-token": token,
-        token: token,
       },
-      body: JSON.stringify({ ...body, token, accessToken: token }),
+      body: JSON.stringify(body),
     });
 
     const data = await backendRes.json();
-    console.log(
-      "[razorpay/create-order] Backend response:",
-      backendRes.status,
-      data,
-    );
 
     if (!backendRes.ok) {
       return NextResponse.json(
-        { error: data?.error || "Failed to create order." },
+        { error: data?.error || "Failed to create payment order." },
         { status: backendRes.status },
       );
     }
 
     return NextResponse.json(data, { status: 200 });
   } catch (err) {
-    console.error("[razorpay/create-order] proxy error:", err);
+    console.error("[payment/create-order] proxy error:", err);
     return NextResponse.json(
       { error: "Internal proxy error." },
       { status: 500 },

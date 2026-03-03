@@ -11,6 +11,7 @@
   "dependencies": {
     "@iconify/react": "^6.0.2",
     "@reduxjs/toolkit": "^2.11.2",
+    "axios": "^1.13.6",
     "browserslist": "^4.28.1",
     "caniuse-lite": "^1.0.30001774",
     "clsx": "^2.1.1",

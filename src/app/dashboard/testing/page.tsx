@@ -1393,7 +1393,7 @@ export default function TestingPage() {
             onFocus={() => results.length > 0 && setShowDropdown(true)}
             onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
             placeholder="Type city or place name..."
-            className="w-full h-10 px-4 pr-10 text-sm border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+            className="w-full h-10 px-4 pr-10 text-sm text-gray-900 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
           />
           {searching ? (
             <Iconify
@@ -1448,7 +1448,7 @@ export default function TestingPage() {
             <input
               type="date"
               {...register(dateField)}
-              className="w-full h-10 px-3 text-sm border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+              className="w-full h-10 px-3 text-sm text-gray-900 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
             />
           </div>
           <div>
@@ -1459,7 +1459,7 @@ export default function TestingPage() {
             <input
               type="time"
               {...register(timeField)}
-              className="w-full h-10 px-3 text-sm border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+              className="w-full h-10 px-3 text-sm text-gray-900 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
             />
           </div>
         </div>
@@ -1477,7 +1477,7 @@ export default function TestingPage() {
               type="text"
               {...register(latField)}
               placeholder="22.57"
-              className="w-full h-10 px-3 text-sm border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+              className="w-full h-10 px-3 text-sm text-gray-900 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
             />
           </div>
           <div>
@@ -1488,7 +1488,7 @@ export default function TestingPage() {
               type="text"
               {...register(lonField)}
               placeholder="88.36"
-              className="w-full h-10 px-3 text-sm border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+              className="w-full h-10 px-3 text-sm text-gray-900 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
             />
           </div>
           <div>
@@ -1499,7 +1499,7 @@ export default function TestingPage() {
               type="text"
               {...register(tzField)}
               placeholder="5.5"
-              className="w-full h-10 px-3 text-sm border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+              className="w-full h-10 px-3 text-sm text-gray-900 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
             />
           </div>
         </div>
@@ -1531,7 +1531,7 @@ export default function TestingPage() {
       <div className="relative">
         <select
           {...register(field)}
-          className="w-full h-10 px-3 pr-10 text-sm border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all appearance-none cursor-pointer"
+          className="w-full h-10 px-3 pr-10 text-sm text-gray-900 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all appearance-none cursor-pointer"
         >
           {placeholder && <option value="">{placeholder}</option>}
           {options.map((opt) => (
@@ -1760,7 +1760,7 @@ export default function TestingPage() {
                       type="text"
                       {...register("timezone_only")}
                       placeholder="e.g., 5.5"
-                      className="w-full h-10 px-3 text-sm border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                      className="w-full h-10 px-3 text-sm text-gray-900 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
                     />
                   </div>
                 )}
@@ -1795,7 +1795,7 @@ export default function TestingPage() {
                       type="text"
                       {...register("name")}
                       placeholder="Enter name..."
-                      className="w-full h-10 px-3 text-sm border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                      className="w-full h-10 px-3 text-sm text-gray-900 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
                     />
                   </div>
                 )}
@@ -1813,7 +1813,7 @@ export default function TestingPage() {
                       type="number"
                       {...register("varshaphal_year")}
                       placeholder="2026"
-                      className="w-full h-10 px-3 text-sm border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                      className="w-full h-10 px-3 text-sm text-gray-900 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
                     />
                   </div>
                 )}
@@ -1838,7 +1838,7 @@ export default function TestingPage() {
                       type="number"
                       {...register("solar_year")}
                       placeholder="2026"
-                      className="w-full h-10 px-3 text-sm border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                      className="w-full h-10 px-3 text-sm text-gray-900 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
                     />
                   </div>
                 )}
@@ -1855,7 +1855,7 @@ export default function TestingPage() {
                         placeholder="1-12"
                         min={1}
                         max={12}
-                        className="w-full h-10 px-3 text-sm border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                        className="w-full h-10 px-3 text-sm text-gray-900 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
                       />
                     </div>
                     <div>
@@ -1866,7 +1866,7 @@ export default function TestingPage() {
                         type="number"
                         {...register("calendar_year")}
                         placeholder="2026"
-                        className="w-full h-10 px-3 text-sm border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                        className="w-full h-10 px-3 text-sm text-gray-900 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
                       />
                     </div>
                     <SelectInput
@@ -2096,29 +2096,34 @@ export default function TestingPage() {
                     </div>
                   ) : (
                     <pre className="text-sm font-mono text-gray-300 whitespace-pre-wrap break-all">
-                      <code>
-                        {JSON.stringify(response, null, 2)
-                          .replace(
-                            /"([^"]+)":/g,
-                            '<span class="text-purple-400">"$1"</span>:',
-                          )
-                          .replace(
-                            /: "([^"]+)"/g,
-                            ': <span class="text-emerald-400">"$1"</span>',
-                          )
-                          .replace(
-                            /: (\d+)/g,
-                            ': <span class="text-amber-400">$1</span>',
-                          )
-                          .replace(
-                            /: (true|false)/g,
-                            ': <span class="text-blue-400">$1</span>',
-                          )
-                          .replace(
-                            /: (null)/g,
-                            ': <span class="text-red-400">$1</span>',
-                          )}
-                      </code>
+                      <code
+                        dangerouslySetInnerHTML={{
+                          __html: JSON.stringify(response, null, 2)
+                            .replace(/&/g, "&amp;")
+                            .replace(/</g, "&lt;")
+                            .replace(/>/g, "&gt;")
+                            .replace(
+                              /&quot;([^&]+?)&quot;:/g,
+                              '<span class="text-purple-400">"$1"</span>:',
+                            )
+                            .replace(
+                              /: &quot;([^&]*?)&quot;/g,
+                              ': <span class="text-emerald-400">"$1"</span>',
+                            )
+                            .replace(
+                              /: (\d+)/g,
+                              ': <span class="text-amber-400">$1</span>',
+                            )
+                            .replace(
+                              /: (true|false)/g,
+                              ': <span class="text-blue-400">$1</span>',
+                            )
+                            .replace(
+                              /: (null)/g,
+                              ': <span class="text-red-400">$1</span>',
+                            ),
+                        }}
+                      />
                     </pre>
                   )}
                 </div>
