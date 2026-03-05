@@ -2,7 +2,7 @@ import axios from "axios";
 import { getAuthToken } from "@/src/lib/auth";
 
 const api = axios.create({
-  baseURL: "",
+  baseURL: process.env.AUTH_BASE_URL,
   headers: { "Content-Type": "application/json" },
 });
 

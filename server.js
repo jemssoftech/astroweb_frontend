@@ -6,7 +6,7 @@ import { io as ioClient } from "socket.io-client";
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "localhost";
 const port = 3001;
-const BACKEND_URL = process.env.AUTH_BASE_URL || "http://localhost:3000";
+const BACKEND_URL = process.env.AUTH_BASE_URL;
 
 // when using middleware `hostname` and `port` must be provided below
 const app = next({ dev, hostname, port });

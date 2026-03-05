@@ -148,6 +148,11 @@ export default function Sidebar({
 
   const resourceNavItems = [
     {
+      href: "/dashboard/guide",
+      label: "API Guide",
+      icon: "lucide:book-open",
+    },
+    {
       href: "/dashboard/support",
       label: "Help & Support",
       icon: "lucide:headphones",
