@@ -41,7 +41,7 @@ export default function LandingHero() {
         }}
       ></div>
 
-      <div className="container xl:max-w-[1440px] mx-auto px-6 relative z-10 w-full mb-12">
+      <div className="container xl:max-w-[1440px] mx-auto px-4 sm:px-6 relative z-10 w-full mb-12">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8  mx-auto">
           {/* Left Column - Content */}
           <div className="flex-1 w-full max-w-[550px] pt-10 lg:pt-0 z-10">
@@ -52,18 +52,19 @@ export default function LandingHero() {
             </div>
 
             {/* Headline */}
-            <h1 className="text-[3.2rem] sm:text-[4.2rem] lg:text-[68px] font-bold text-white mb-6 tracking-tight leading-[1.05]">
+            <h1 className="text-[2.2rem] sm:text-[3.5rem] lg:text-[68px] font-bold text-white mb-6 tracking-tight leading-[1.1] lg:leading-[1.05] text-center lg:text-left">
               <span className="bg-clip-text text-transparent bg-gradient-to-br from-orange-400 via-amber-400 to-amber-400 pb-1 inline-block">
-                All-in-One <br />
+                All-in-One <br className="hidden sm:block" />
                 Astrology
               </span>{" "}
-              <br />
-              <span className="text-gray-400">Platform for Your</span> <br />
+              <br className="hidden sm:block" />
+              <span className="text-gray-400">Platform for Your</span>{" "}
+              <br className="hidden sm:block" />
               Business
             </h1>
 
             {/* Subheadline */}
-            <p className="text-[#9CA3AF] max-w-[480px] text-[17px] mb-10 leading-relaxed font-light">
+            <p className="text-[#9CA3AF] max-w-[480px] text-[15px] sm:text-[17px] mb-10 leading-relaxed font-light text-center lg:text-left mx-auto lg:mx-0">
               AstrologyAPI is the{" "}
               <strong className="text-white font-medium">
                 leading Astrology-as-a-Service
@@ -74,12 +75,12 @@ export default function LandingHero() {
             </p>
 
             {/* Buttons */}
-            <div className="flex flex-wrap items-center gap-4 mb-14">
-              <button className="flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-br from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400  duration-300 text-white rounded-xl text-[14px] font-bold transition-all shadow-[0_0_20px_rgba(249, 115, 22,0.3)] hover:scale-[1.02]">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-14">
+              <button className="flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-br from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 duration-300 text-white rounded-xl text-[14px] font-bold transition-all shadow-[0_0_20px_rgba(249, 115, 22,0.3)] hover:scale-[1.02] w-full sm:w-auto">
                 <Iconify icon="ph:sparkle-fill" className="text-lg" />
                 Get Early Access
               </button>
-              <button className="flex items-center justify-center gap-2 px-6 py-3.5 bg-[#1E293B]/80 backdrop-blur-md border border-white/10 text-white rounded-xl text-[14px] font-bold transition-all hover:bg-[#1A1A24] hover:border-white/20 hover:scale-[1.02]">
+              <button className="flex items-center justify-center gap-2 px-6 py-3.5 bg-[#1E293B]/80 backdrop-blur-md border border-white/10 text-white rounded-xl text-[14px] font-bold transition-all hover:bg-[#1A1A24] hover:border-white/20 hover:scale-[1.02] w-full sm:w-auto">
                 <Iconify
                   icon="ph:users-three"
                   className="text-lg text-gray-400"
@@ -118,8 +119,8 @@ export default function LandingHero() {
           </div>
 
           {/* Right Column - Orbital Graphic */}
-          <div className="flex-1 flex justify-center items-center relative w-full h-[500px] lg:h-[700px] mt-10 lg:mt-0">
-            <div className="relative w-[400px] h-[400px] lg:w-[500px] lg:h-[500px] flex items-center justify-center">
+          <div className="flex-1 flex justify-center items-center relative w-full h-[400px] sm:h-[500px] lg:h-[700px] mt-10 lg:mt-0">
+            <div className="relative w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px] flex items-center justify-center scale-90 sm:scale-100">
               {/* Concentric Rings */}
               <div className="absolute w-[110%] h-[110%] rounded-full border border-white/[0.04]"></div>
               <div className="absolute w-[85%] h-[85%] rounded-full border border-white/[0.05]"></div>
@@ -127,81 +128,83 @@ export default function LandingHero() {
               <div className="absolute w-[35%] h-[35%] rounded-full border border-white/[0.08]"></div>
 
               {/* Center Glow / Orb */}
-              <div className="absolute w-[45%] h-[45%] rounded-full bg-gradient-to-br from-[#E879F9] to-[#7E22CE] blur-[80px] opacity-40"></div>
-              <div className="absolute inset-[26%] rounded-full bg-[radial-gradient(circle_at_35%_30%,rgba(192,132,252,0.4),rgba(124,58,237,0.25)_40%,rgba(4,5,13,0.9)_80%)] border border-[rgba(249, 115, 22,0.3)] overflow-hidden backdrop-blur-2xl shadow-[0_0_80px_rgba(124,58,237,0.4),0_0_160px_rgba(124,58,237,0.15),inset_0_0_40px_rgba(249, 115, 22,0.1)] ">
+              <div className="absolute w-[45%] h-[45%] rounded-full bg-gradient-to-br from-[#E879F9] to-[#7E22CE] blur-[60px] sm:blur-[80px] opacity-40"></div>
+              <div className="absolute inset-[26%] rounded-full bg-[radial-gradient(circle_at_35%_30%,rgba(192,132,252,0.4),rgba(124,58,237,0.25)_40%,rgba(4,5,13,0.9)_80%)] border border-[rgba(249, 115, 22,0.3)] overflow-hidden backdrop-blur-2xl shadow-[0_0_40px_rgba(124,58,237,0.4),0_0_80px_rgba(124,58,237,0.15),inset_0_0_20px_rgba(249, 115, 22,0.1)] ">
                 <img
                   src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=600&q=80"
                   className="w-full h-full object-cover rounded-full opacity-50 mix-blend-lighten"
                   alt=""
                 />
 
-                <div className="absolute flex flex-col items-center justify-center inset-0 gap-3">
+                <div className="absolute flex flex-col items-center justify-center inset-0 gap-2 sm:gap-3">
                   <div className="absolute rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(192,132,252,0.2),transparent_55%),radial-gradient(circle_at_70%_70%,rgba(236,72,153,0.12),transparent_50%)] animate-pulseOpacity">
                     ☽
                   </div>
-                  <div className="text-[10px] text-[rgba(249, 115, 22,0.7)] tracking-[0.2em] uppercase mt-6 font-semibold">
+                  <div className="text-[8px] sm:text-[10px] text-[rgba(249, 115, 22,0.7)] tracking-[0.2em] uppercase mt-4 sm:mt-6 font-semibold">
                     Oracle
                   </div>
                 </div>
               </div>
 
               {/* Card 1: Birth Charts */}
-              <div className="absolute top-[15%] left-[-20%] lg:left-[-15%] bg-[#0F172A]/90 backdrop-blur-xl border border-white/5 p-4 rounded-2xl w-48 shadow-2xl z-20">
-                <div className="w-10 h-10 rounded-xl bg-[#1C162A] flex items-center justify-center mb-3">
+              <div className="absolute top-[5%] left-[-15%] sm:top-[15%] sm:left-[-15%] lg:left-[-15%] bg-[#0F172A]/90 backdrop-blur-xl border border-white/5 p-3 sm:p-4 rounded-2xl w-36 sm:w-48 shadow-2xl z-20">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#1C162A] flex items-center justify-center mb-2 sm:mb-3">
                   <Iconify
                     icon="mdi:sparkles"
-                    className="text-[#F59E0B] text-xl"
+                    className="text-[#F59E0B] text-lg sm:text-xl"
                   />
                 </div>
-                <h3 className="text-white font-bold text-[13px] mb-1">
+                <h3 className="text-white font-bold text-[11px] sm:text-[13px] mb-0.5 sm:mb-1">
                   Birth Charts
                 </h3>
-                <p className="text-gray-500 text-[11px] mb-4">
+                <p className="text-gray-500 text-[10px] sm:text-[11px] mb-3 sm:mb-4">
                   Vedic & Western
                 </p>
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#022C22] border border-[#059669]/30">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse"></div>
-                  <span className="text-[#10B981] text-[9px] font-bold tracking-widest">
+                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[#022C22] border border-[#059669]/30">
+                  <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-[#10B981] animate-pulse"></div>
+                  <span className="text-[#10B981] text-[8px] sm:text-[9px] font-bold tracking-widest">
                     LIVE API
                   </span>
                 </div>
               </div>
 
               {/* Card 2: Interpretations */}
-              <div className="absolute top-[45%] right-[-25%] lg:right-[-20%] bg-[#0F172A]/90 backdrop-blur-xl border border-white/5 p-4 rounded-2xl w-48 shadow-2xl z-20">
-                <div className="w-10 h-10 rounded-xl bg-[#2E162A] flex items-center justify-center mb-3">
+              <div className="absolute top-[40%] right-[-20%] sm:top-[45%] sm:right-[-20%] lg:right-[-20%] bg-[#0F172A]/90 backdrop-blur-xl border border-white/5 p-3 sm:p-4 rounded-2xl w-36 sm:w-48 shadow-2xl z-20">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#2E162A] flex items-center justify-center mb-2 sm:mb-3">
                   <Iconify
                     icon="mdi:magic-staff"
-                    className="text-[#E879F9] text-xl"
+                    className="text-[#E879F9] text-lg sm:text-xl"
                   />
                 </div>
-                <h3 className="text-white font-bold text-[13px] mb-1">
+                <h3 className="text-white font-bold text-[11px] sm:text-[13px] mb-0.5 sm:mb-1">
                   Interpretations
                 </h3>
-                <p className="text-gray-500 text-[11px]">AI-powered insights</p>
+                <p className="text-gray-500 text-[10px] sm:text-[11px]">
+                  AI-powered insights
+                </p>
               </div>
 
               {/* Card 3: Real-time Data */}
-              <div className="absolute bottom-[5%] right-[-10%] lg:right-[-5%] bg-[#0F172A]/90 backdrop-blur-xl border border-white/5 p-4 rounded-2xl w-48 shadow-2xl z-20">
-                <div className="w-10 h-10 rounded-xl bg-[#0F221B] flex items-center justify-center mb-3">
+              <div className="absolute bottom-[0%] right-[-5%] sm:bottom-[5%] sm:right-[-5%] lg:right-[-5%] bg-[#0F172A]/90 backdrop-blur-xl border border-white/5 p-3 sm:p-4 rounded-2xl w-36 sm:w-48 shadow-2xl z-20">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#0F221B] flex items-center justify-center mb-2 sm:mb-3">
                   <Iconify
                     icon="mdi:earth"
-                    className="text-[#10B981] text-xl"
+                    className="text-[#10B981] text-lg sm:text-xl"
                   />
                 </div>
-                <h3 className="text-white font-bold text-[13px] mb-1">
+                <h3 className="text-white font-bold text-[11px] sm:text-[13px] mb-0.5 sm:mb-1">
                   Real-time Data
                 </h3>
-                <p className="text-gray-500 text-[11px] mb-4">
+                <p className="text-gray-500 text-[10px] sm:text-[11px] mb-3 sm:mb-4">
                   Planetary positions
                 </p>
                 {/* Audio/Data bars visualization */}
-                <div className="flex gap-1.5 items-end h-[16px]">
-                  <div className="w-1.5 h-[100%] bg-[#10B981] rounded-sm"></div>
-                  <div className="w-1.5 h-[60%] bg-[#10B981] rounded-sm"></div>
-                  <div className="w-1.5 h-[80%] bg-[#10B981] rounded-sm"></div>
-                  <div className="w-1.5 h-[40%] bg-[#10B981] rounded-sm"></div>
-                  <div className="w-1.5 h-[100%] bg-[#10B981] rounded-sm"></div>
+                <div className="flex gap-1 items-end h-[12px] sm:h-[16px]">
+                  <div className="w-1 sm:w-1.5 h-[100%] bg-[#10B981] rounded-sm"></div>
+                  <div className="w-1 sm:w-1.5 h-[60%] bg-[#10B981] rounded-sm"></div>
+                  <div className="w-1 sm:w-1.5 h-[80%] bg-[#10B981] rounded-sm"></div>
+                  <div className="w-1 sm:w-1.5 h-[40%] bg-[#10B981] rounded-sm"></div>
+                  <div className="w-1 sm:w-1.5 h-[100%] bg-[#10B981] rounded-sm"></div>
                 </div>
               </div>
 

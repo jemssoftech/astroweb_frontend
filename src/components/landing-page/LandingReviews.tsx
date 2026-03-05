@@ -123,7 +123,7 @@ export default function LandingReviews() {
             </span>
           </div>
 
-          <h2 className="text-[2.5rem] md:text-[3.5rem] font-bold text-white mb-6 tracking-tight leading-[1.1]">
+          <h2 className="text-[2.2rem] md:text-[3.5rem] font-bold text-white mb-6 tracking-tight leading-[1.2] md:leading-[1.1]">
             What our customers <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FBBF24] to-[#F97316]">
               are saying
@@ -138,7 +138,7 @@ export default function LandingReviews() {
         </div>
 
         {/* Reviews Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mb-16">
           {reviews.map((review, index) => (
             <div
               key={index}

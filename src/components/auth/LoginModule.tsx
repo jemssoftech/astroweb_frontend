@@ -78,9 +78,9 @@ export default function LoginModule() {
 
           if (data.accessToken) {
             // Store tokens in cookies
-            document.cookie = `accessToken=${data.accessToken}; path=/; max-age=7200; Secure; SameSite=Lax`;
+            document.cookie = `accessToken=${data.accessToken}; path=/; max-age=7200; SameSite=Lax`;
             if (data.refreshToken) {
-              document.cookie = `refreshToken=${data.refreshToken}; path=/; max-age=86400; Secure; SameSite=Lax`;
+              document.cookie = `refreshToken=${data.refreshToken}; path=/; max-age=86400; SameSite=Lax`;
             }
             if (data.user) {
               // Store user details in localStorage

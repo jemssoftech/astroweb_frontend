@@ -64,7 +64,6 @@ export async function POST(req: NextRequest) {
     response.cookies.set("accessToken", newAccessToken, {
       path: "/",
       maxAge: 7200, // 2 hours, matching login
-      secure: true,
       sameSite: "lax",
       httpOnly: false, // keep false so js-cookie can still read it on the client
     });

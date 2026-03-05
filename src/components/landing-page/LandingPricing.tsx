@@ -160,21 +160,21 @@ export default function LandingPricing() {
       <div className="container xl:max-w-[1440px] mx-auto px-6 max-w-[1200px] relative z-10 w-full text-center">
         {/* Section Header */}
         <div className="flex flex-col items-center mb-16">
-          <h2 className="text-[2.5rem] md:text-[3.5rem] font-bold text-white mb-4 tracking-tight leading-[1.1]">
-            Tailored pricing plans <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FBBF24] to-[#F97316] opacity-80">
-              designed for you
+          <h2 className="text-[2.2rem] md:text-[3.5rem] font-bold text-white mb-6 tracking-tight leading-[1.2] md:leading-[1.1]">
+            Everything you need <br />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FBBF24] to-[#F97316]">
+              to start your next project
             </span>
           </h2>
 
-          <p className="text-[#9CA3AF] max-w-2xl text-[13px] font-light leading-relaxed mx-auto">
+          <p className="text-[#9CA3AF] max-w-2xl text-[1rem] sm:text-[1.1rem] font-light leading-relaxed mx-auto">
             All plans include 40+ advanced astrology tools and features. <br />
             Choose the cosmic plan that fits your journey.
           </p>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20 w-full mx-auto items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 w-full mx-auto items-start">
           {plans.map((plan, index) => (
             <div key={index} className="w-full h-full">
               <div
@@ -235,7 +235,7 @@ export default function LandingPricing() {
                   {/* <!-- Price --> */}
                   <div className="text-center mb-[24px] pb-[24px] border-b border-white/10">
                     <div
-                      className={`text-[52px] font-extrabold leading-none 
+                      className={`text-[40px] sm:text-[52px] font-extrabold leading-none 
             bg-gradient-to-br ${plan.theme.gradientText} 
             bg-clip-text text-transparent`}
                     >

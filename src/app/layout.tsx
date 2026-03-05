@@ -5,6 +5,7 @@ import LandingNavbar from "../components/landing-page/LandingNavbar";
 import LandingFooter from "../components/landing-page/LandingFooter";
 import { SocketProvider } from "@/src/context/SocketContext";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "@/src/components/theme-provider";
 
 const publicSans = Public_Sans({
   subsets: ["latin"],
@@ -74,7 +75,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -88,15 +89,21 @@ export default function RootLayout({
         />
       </head>
       <body
-        suppressHydrationWarning
         className={`antialiased min-h-screen flex flex-col w-full h-full font-sans m-0 p-0 ${publicSans.variable}`}
       >
-        <SocketProvider>
-          <LandingNavbar />
-          {children}
-          <LandingFooter />
-          <Toaster position="top-center" richColors />
-        </SocketProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SocketProvider>
+            <LandingNavbar />
+            {children}
+            <LandingFooter />
+            <Toaster position="top-center" richColors />
+          </SocketProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

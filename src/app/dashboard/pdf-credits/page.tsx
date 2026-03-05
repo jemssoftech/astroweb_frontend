@@ -22,13 +22,13 @@ export default function PdfCreditsPage() {
 
         {/* Feature Badge */}
         <div className="mb-6">
-          <span className="px-4 py-1.5 bg-blue-50 text-blue-600 text-xs font-bold rounded-full border border-blue-100 uppercase tracking-widest animate-pulse">
+          <span className="px-4 py-1.5 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-bold rounded-full border border-blue-100 dark:border-blue-500/20 uppercase tracking-widest animate-pulse transition-colors">
             Upcoming Feature
           </span>
         </div>
 
         {/* Main Title */}
-        <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight transition-colors">
           PDF Credits are{" "}
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
             Coming Soon
@@ -36,7 +36,7 @@ export default function PdfCreditsPage() {
         </h1>
 
         {/* Description */}
-        <p className="text-gray-500 text-sm font-medium leading-relaxed max-w-sm mx-auto">
+        <p className="text-gray-500 dark:text-gray-400 text-sm font-medium leading-relaxed max-w-sm mx-auto transition-colors">
           We&apos;re building a premium experience for managing your PDF report
           credits. Stay tuned!
         </p>
@@ -62,15 +62,20 @@ export default function PdfCreditsPage() {
           ].map((item, idx) => (
             <div
               key={idx}
-              className="p-5 bg-white/50 backdrop-blur-md border border-slate-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow"
+              className="p-5 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md border border-slate-100 dark:border-white/5 rounded-2xl shadow-sm hover:shadow-md transition-all"
             >
-              <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mx-auto mb-3">
-                <Iconify icon={item.icon} className="text-blue-500 text-xl" />
+              <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center mx-auto mb-3">
+                <Iconify
+                  icon={item.icon}
+                  className="text-blue-500 dark:text-blue-400 text-xl"
+                />
               </div>
-              <h4 className="text-sm font-bold text-slate-800 mb-1">
+              <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">
                 {item.label}
               </h4>
-              <p className="text-xs text-slate-500 font-medium">{item.desc}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                {item.desc}
+              </p>
             </div>
           ))}
         </div>
@@ -78,7 +83,7 @@ export default function PdfCreditsPage() {
         {/* Action Button */}
         <Link
           href="/dashboard"
-          className="inline-flex items-center gap-2 px-8 py-3.5 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-bold transition-all hover:scale-105 shadow-xl shadow-slate-900/20 active:scale-95"
+          className="inline-flex items-center gap-2 px-8 py-3.5 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 rounded-2xl font-bold transition-all hover:scale-105 shadow-xl shadow-slate-900/20 dark:shadow-white/10 active:scale-95"
         >
           <Iconify icon="lucide:arrow-left" className="text-xl" />
           Back to Dashboard

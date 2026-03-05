@@ -91,14 +91,25 @@ export default function DashboardLayout({
     }
   }, [isAuthenticated, isConnected, socket, handleInvalidToken]);
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   if (!isAuthenticated) return null; // Prevent flicker before redirect
 
   return (
-    <div className="flex h-screen w-full bg-[#ecf0f5] font-sans antialiased overflow-hidden">
-      <Sidebar />
-      <main className="flex-1 flex flex-col h-full overflow-y-auto">
-        <DashboardNavbar />
-        {children}
+    <div
+      className={`flex h-screen w-full bg-[#ecf0f5] dark:bg-slate-950 font-sans antialiased overflow-hidden transition-colors duration-300`}
+    >
+      <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+      <main className="flex-1 flex flex-col h-full bg-slate-50 dark:bg-slate-950 transition-colors duration-300 overflow-y-auto relative">
+        <DashboardNavbar onMenuClick={() => setIsSidebarOpen(true)} />
+        <div className="p-4 sm:p-6 lg:p-8">{children}</div>
+        {/* Backdrop when sidebar is open */}
+        {isSidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
       </main>
     </div>
   );

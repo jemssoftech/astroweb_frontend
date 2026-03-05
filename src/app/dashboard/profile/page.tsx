@@ -53,6 +53,10 @@ export default function ProfilePage() {
   const [showFullKey, setShowFullKey] = useState(false);
   const [refreshingKey, setRefreshingKey] = useState(false);
 
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+  };
+
   // Copy API key to clipboard
   const handleCopyApiKey = useCallback(() => {
     const apiKey = profile?.apiKey || profile?.api_key;
@@ -68,31 +72,54 @@ export default function ProfilePage() {
     if (!socket || !isConnected || !token) return;
     setRefreshingKey(true);
 
-    const handleRefreshResponse = (response: any) => {
+    const handleRefreshResponse = (response: unknown) => {
+      // Changed from any to unknown
       console.log("Received refresh-api-key-response:", response);
       clearTimeout(timeoutId);
       socket.off("refresh-api-key-response", handleRefreshResponse);
       setRefreshingKey(false);
 
-      if (response && !response.error) {
+      if (
+        response &&
+        typeof response === "object" &&
+        !("error" in response && response.error)
+      ) {
         const newKey =
-          response.apiKey ||
-          response.api_key ||
-          response.data?.apiKey ||
-          response.data?.api_key;
+          ("apiKey" in response && (response.apiKey as string)) ||
+          ("api_key" in response && (response.api_key as string)) ||
+          ("data" in response &&
+            typeof response.data === "object" &&
+            response.data &&
+            "apiKey" in response.data &&
+            (response.data.apiKey as string)) ||
+          ("data" in response &&
+            typeof response.data === "object" &&
+            response.data &&
+            "api_key" in response.data &&
+            (response.data.api_key as string));
         if (newKey && profile) {
           setProfile({ ...profile, apiKey: newKey });
         }
         setEditFeedback({
           type: "success",
-          message: response.message || "API key refreshed successfully!",
+          message:
+            ("message" in response && (response.message as string)) ||
+            "API key refreshed successfully!",
         });
         setTimeout(() => setEditFeedback(null), 4000);
       } else {
         setEditFeedback({
           type: "error",
           message:
-            response?.message || response?.error || "Failed to refresh API key",
+            (typeof response === "object" &&
+              response &&
+              "message" in response &&
+              (response.message as string)) ||
+            (typeof response === "object" &&
+              response &&
+              "error" in response &&
+              (response.error as string)) ||
+            "Failed to refresh API key",
         });
       }
     };
@@ -133,7 +160,8 @@ export default function ProfilePage() {
   }, [profile]);
 
   // Add a domain to the list
-  const handleAddDomain = useCallback(() => {
+  const handleAddDomain = (event?: React.FormEvent | React.KeyboardEvent) => {
+    if (event) event.preventDefault();
     const trimmed = domainInput.trim();
     if (!trimmed) return;
     if (editForm.allowedDomains.includes(trimmed)) {
@@ -145,7 +173,7 @@ export default function ProfilePage() {
       allowedDomains: [...prev.allowedDomains, trimmed],
     }));
     setDomainInput("");
-  }, [domainInput, editForm.allowedDomains]);
+  };
 
   // Remove a domain from the list
   const handleRemoveDomain = useCallback((idx: number) => {
@@ -172,21 +200,33 @@ export default function ProfilePage() {
     console.log("Emitting edit-profile", payload);
 
     // One-shot listener: register before emit, remove after response
-    const handleEditResponse = (response: any) => {
+    const handleEditResponse = (response: unknown) => {
+      // Changed from any to unknown
       console.log("Received edit-profile-response:", response);
       clearTimeout(timeoutId);
       socket.off("edit-profile-response", handleEditResponse);
       setSaving(false);
 
-      if (response && response.valid !== false && !response.error) {
+      if (
+        response &&
+        typeof response === "object" &&
+        !("valid" in response && response.valid === false) &&
+        !("error" in response && response.error)
+      ) {
         // Update profile with returned data
-        let updatedUser;
-        if (response.data && response.data.user) {
-          updatedUser = response.data.user;
-        } else if (response.user) {
-          updatedUser = response.user;
-        } else if (response.data) {
-          updatedUser = response.data;
+        let updatedUser: UserProfile | undefined;
+        if (
+          "data" in response &&
+          typeof response.data === "object" &&
+          response.data &&
+          "user" in response.data &&
+          typeof response.data.user === "object"
+        ) {
+          updatedUser = response.data.user as UserProfile;
+        } else if ("user" in response && typeof response.user === "object") {
+          updatedUser = response.user as UserProfile;
+        } else if ("data" in response && typeof response.data === "object") {
+          updatedUser = response.data as UserProfile;
         } else {
           // Fallback: apply form values locally
           updatedUser = { ...profile, ...editForm };
@@ -196,7 +236,9 @@ export default function ProfilePage() {
         setIsEditing(false);
         setEditFeedback({
           type: "success",
-          message: response.message || "Profile updated successfully!",
+          message:
+            ("message" in response && (response.message as string)) ||
+            "Profile updated successfully!",
         });
 
         // Auto-hide success message after 4 seconds
@@ -205,7 +247,15 @@ export default function ProfilePage() {
         setEditFeedback({
           type: "error",
           message:
-            response?.message || response?.error || "Failed to update profile",
+            (typeof response === "object" &&
+              response &&
+              "message" in response &&
+              (response.message as string)) ||
+            (typeof response === "object" &&
+              response &&
+              "error" in response &&
+              (response.error as string)) ||
+            "Failed to update profile",
         });
       }
     };
@@ -307,24 +357,79 @@ export default function ProfilePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket, isConnected, token]);
   return (
-    <div className="flex-1 w-full  bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+    <div className="flex-1 w-full transition-colors duration-300">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-blue-100/40 to-purple-100/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 animate-pulse" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-cyan-100/30 to-emerald-100/30 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-linear-to-br from-blue-100/40 to-purple-100/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-linear-to-tr from-cyan-100/30 to-emerald-100/30 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4" />
       </div>
 
-      <div className="relative z-10 p-4 md:p-6 lg:p-8  mx-auto space-y-6 mt-8">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
-            <Iconify icon="lucide:user" className="text-white text-2xl" />
+      <div className="relative z-10 container mx-auto space-y-6">
+        {/* Header — Premium gradient banner */}
+        <div className="relative mb-6 overflow-hidden bg-linear-to-br from-blue-600 to-cyan-600 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-2xl shadow-blue-500/20">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white" />
+            <div className="absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-white" />
           </div>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
-            <p className="text-sm text-gray-500">
-              Manage your account details and preferences
-            </p>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
+
+          <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="w-14 h-14 rounded-xl sm:rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                <Iconify
+                  icon="lucide:user"
+                  className="text-white text-md sm:text-2xl"
+                />
+              </div>
+              <div>
+                <h1 className="text-md sm:text-2xl md:text-3xl font-bold text-white mb-1">
+                  My Profile
+                </h1>
+                <p className="text-blue-100/80 text-sm">
+                  Manage your account details and preferences
+                </p>
+              </div>
+            </div>
+
+            {!isEditing ? (
+              <button
+                onClick={handleStartEdit}
+                className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-white/10 backdrop-blur-sm hover:bg-white/20 border border-white/10 rounded-xl text-sm font-bold text-white transition-all active:scale-95"
+              >
+                <Iconify icon="lucide:edit-2" className="text-lg" />
+                Edit Profile
+              </button>
+            ) : (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleCancelEdit}
+                  disabled={saving}
+                  className="px-4 py-2 bg-white/10 backdrop-blur-sm hover:bg-white/20 border border-white/10 rounded-xl text-sm font-bold text-white transition-all disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSaveProfile}
+                  disabled={saving}
+                  className="px-4 py-2 bg-white text-blue-600 rounded-xl text-sm font-bold hover:shadow-lg transition-all flex items-center gap-1.5 disabled:opacity-50 active:scale-95"
+                >
+                  {saving ? (
+                    <>
+                      <Iconify
+                        icon="lucide:loader-2"
+                        className="text-sm animate-spin"
+                      />
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <Iconify icon="lucide:check" className="text-sm" />
+                      Save Changes
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -357,7 +462,7 @@ export default function ProfilePage() {
 
         {/* Profile Content */}
         {loading && !profile ? (
-          <div className="flex flex-col items-center justify-center p-12 bg-white rounded-2xl shadow-sm border border-gray-100">
+          <div className="flex flex-col items-center justify-center p-12 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-white/5">
             <Iconify
               icon="lucide:loader-2"
               className="text-3xl text-blue-500 animate-spin mb-4"
@@ -380,31 +485,33 @@ export default function ProfilePage() {
             </div>
           </div>
         ) : profile ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             {/* Left Column: Avatar & Quick Info */}
-            <div className="col-span-1 space-y-6">
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col items-center text-center">
+            <div className="col-span-1 space-y-4 sm:space-y-6">
+              <div className="bg-white dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm p-5 sm:p-6 flex flex-col items-center text-center">
                 <div className="relative mb-4 group cursor-pointer">
-                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-bold text-3xl shadow-xl shadow-purple-500/20 group-hover:scale-105 transition-transform">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-linear-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-white font-bold text-2xl sm:text-3xl shadow-xl shadow-blue-500/20 group-hover:scale-105 transition-transform">
                     {profile.username?.charAt(0).toUpperCase() || "U"}
                   </div>
-                  <div className="absolute bottom-0 right-0 w-8 h-8 bg-blue-500 rounded-full border-4 border-white flex items-center justify-center shadow-sm">
+                  <div className="absolute bottom-0 right-0 w-8 h-8 bg-blue-500 rounded-full border-4 border-white dark:border-slate-900 flex items-center justify-center shadow-sm">
                     <Iconify
                       icon="lucide:camera"
                       className="text-white text-xs"
                     />
                   </div>
                 </div>
-                <h2 className="text-xl font-bold text-gray-900 mb-1">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
                   {profile.username || "User"}
                 </h2>
-                <p className="text-sm text-gray-500 mb-4">{profile.email}</p>
-                <span className="px-3 py-1 bg-emerald-50 text-emerald-600 text-xs font-bold rounded-full border border-emerald-100 uppercase tracking-wide">
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                  {profile.email}
+                </p>
+                <span className="px-3 py-1 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-full border border-emerald-100 dark:border-emerald-500/20 uppercase tracking-wide transition-colors">
                   {profile.plan || "Free Plan"}
                 </span>
               </div>
 
-              <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl shadow-lg p-6 text-white relative overflow-hidden">
+              <div className="bg-linear-to-br from-slate-800 to-slate-900 rounded-2xl shadow-lg p-5 sm:p-6 text-white relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/4" />
                 <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
                   Wallet Balance
@@ -429,20 +536,20 @@ export default function ProfilePage() {
                 </Link>
               </div>
               {/* API Key Section */}
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:p-8">
+              <div className="bg-white dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm p-5 sm:p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-md shadow-orange-500/20">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-linear-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-md shadow-orange-500/20">
                       <Iconify
                         icon="lucide:key-round"
                         className="text-white text-lg"
                       />
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-gray-900">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">
                         API Key
                       </h3>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
                         Use this key to authenticate your API requests
                       </p>
                     </div>
@@ -517,51 +624,18 @@ export default function ProfilePage() {
             </div>
 
             {/* Right Column: Detailed Info Form */}
-            <div className="col-span-1 md:col-span-2 space-y-6">
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:p-8">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-bold text-gray-900">
+            <div className="col-span-1 md:col-span-2 space-y-4 sm:space-y-6">
+              <div className="bg-white dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm p-5 sm:p-6 lg:p-8">
+                <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                  <div className="w-9 h-9 rounded-lg bg-linear-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-md shadow-blue-500/20">
+                    <Iconify
+                      icon="lucide:user-circle"
+                      className="text-white text-base"
+                    />
+                  </div>
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
                     Personal Information
                   </h3>
-                  {!isEditing ? (
-                    <button
-                      onClick={handleStartEdit}
-                      className="text-blue-500 text-sm font-semibold hover:text-blue-600 flex items-center gap-1.5 transition-colors"
-                    >
-                      <Iconify icon="lucide:edit-2" className="text-xs" />
-                      Edit
-                    </button>
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={handleCancelEdit}
-                        disabled={saving}
-                        className="px-3 py-1.5 text-sm font-semibold text-gray-600 hover:text-gray-800 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        onClick={handleSaveProfile}
-                        disabled={saving}
-                        className="px-4 py-1.5 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors flex items-center gap-1.5 disabled:opacity-50"
-                      >
-                        {saving ? (
-                          <>
-                            <Iconify
-                              icon="lucide:loader-2"
-                              className="text-sm animate-spin"
-                            />
-                            Saving...
-                          </>
-                        ) : (
-                          <>
-                            <Iconify icon="lucide:check" className="text-sm" />
-                            Save
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  )}
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -583,7 +657,7 @@ export default function ProfilePage() {
                         placeholder="Enter your name"
                       />
                     ) : (
-                      <div className="p-3 bg-gray-50 rounded-xl border border-gray-100 text-gray-800 font-medium">
+                      <div className="p-3 bg-gray-50 dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-white/5 text-gray-800 dark:text-slate-200 font-medium transition-colors">
                         {profile.name || profile.username || "Not set"}
                       </div>
                     )}
@@ -606,13 +680,13 @@ export default function ProfilePage() {
                         placeholder="Enter your email"
                       />
                     ) : (
-                      <div className="p-3 bg-gray-50 rounded-xl border border-gray-100 text-gray-800 font-medium flex items-center justify-between">
+                      <div className="p-3 bg-gray-50 dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-white/5 text-gray-800 dark:text-slate-200 font-medium flex items-center justify-between transition-colors">
                         <span className="truncate">
                           {profile.email || "Not set"}
                         </span>
                         <Iconify
                           icon="lucide:check-circle-2"
-                          className="text-emerald-500 text-lg shrink-0"
+                          className="text-emerald-500 dark:text-emerald-400 text-lg shrink-0"
                         />
                       </div>
                     )}
@@ -635,7 +709,7 @@ export default function ProfilePage() {
                         placeholder="Enter your phone number"
                       />
                     ) : (
-                      <div className="p-3 bg-gray-50 rounded-xl border border-gray-100 text-gray-800 font-medium">
+                      <div className="p-3 bg-gray-50 dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-white/5 text-gray-800 dark:text-slate-200 font-medium transition-colors">
                         {profile.phone || profile.mobileNumber || "Not set"}
                       </div>
                     )}
@@ -705,7 +779,7 @@ export default function ProfilePage() {
                         </div>
                       </div>
                     ) : (
-                      <div className="p-4 bg-gray-50 rounded-xl border border-gray-100 flex flex-wrap gap-2">
+                      <div className="p-4 bg-gray-50 dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-white/5 flex flex-wrap gap-2 transition-colors">
                         {(() => {
                           let domains = profile.allowedDomains;
                           if (typeof domains === "string") {
@@ -751,7 +825,7 @@ export default function ProfilePage() {
                     <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">
                       Member Since
                     </label>
-                    <div className="p-3 bg-gray-50 rounded-xl border border-gray-100 text-gray-800 font-medium">
+                    <div className="p-3 bg-gray-50 dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-white/5 text-gray-800 dark:text-slate-200 font-medium transition-colors">
                       {profile.created_at
                         ? new Date(profile.created_at).toLocaleDateString()
                         : "Feb 2024"}

@@ -102,7 +102,7 @@ export default function ComingSoonPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center relative overflow-hidden transition-colors duration-300">
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Gradient Orbs */}
@@ -167,7 +167,7 @@ export default function ComingSoonPage() {
         {/* Logo */}
         <div className="mb-8 flex justify-center">
           <div className="relative w-20 h-20 rounded-3xl bg-gradient-to-br from-blue-500 to-cyan-500 p-1 shadow-2xl shadow-blue-500/30 animate-pulse">
-            <div className="w-full h-full rounded-[20px] bg-slate-900 flex items-center justify-center">
+            <div className="w-full h-full rounded-[20px] bg-slate-900 dark:bg-black flex items-center justify-center transition-colors">
               <Image
                 src="/image/logo.png"
                 alt="Astro Web Logo"
