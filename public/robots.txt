@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://example.com
+Host: https://playground.astroweb.in
 
 # Sitemaps
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://playground.astroweb.in/sitemap.xml
