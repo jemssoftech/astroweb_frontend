@@ -144,6 +144,11 @@ export default function Sidebar({
       label: "PDF Credits",
       icon: "lucide:file-text",
     },
+    {
+      href: "/playground",
+      label: "Play ground",
+      icon: "lucide:play",
+    },
   ];
 
   const resourceNavItems = [
@@ -268,7 +273,6 @@ export default function Sidebar({
                 onClick={() => setIsOpen(false)}
               />
             ))}
-            <DashboardRedirectButton />
           </div>
 
           {/* Resources Section */}

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_URL = process.env.AUTH_BASE_URL || "http://localhost:3000";
+const AUTH_BASE_URL = process.env.AUTH_BASE_URL || "http://localhost:3000";
 
 export async function GET(req: NextRequest) {
   try {
@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
       ? authHeader.replace("Bearer ", "")
       : req.cookies.get("accessToken")?.value;
 
-    const backendRes = await fetch(`${BACKEND_URL}/api/wallet/balance`, {
+    const backendRes = await fetch(`${AUTH_BASE_URL}/api/wallet/balance`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

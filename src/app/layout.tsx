@@ -3,7 +3,7 @@ import { Public_Sans } from "next/font/google";
 import "./globals.css";
 import LandingNavbar from "../components/landing-page/LandingNavbar";
 import LandingFooter from "../components/landing-page/LandingFooter";
-import { SocketProvider } from "@/src/context/SocketContext";
+
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/src/components/theme-provider";
 
@@ -89,6 +89,7 @@ export default function RootLayout({
         />
       </head>
       <body
+        suppressHydrationWarning={true}
         className={`antialiased min-h-screen flex flex-col w-full h-full font-sans m-0 p-0 ${publicSans.variable}`}
       >
         <ThemeProvider
@@ -97,12 +98,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SocketProvider>
-            <LandingNavbar />
-            {children}
-            <LandingFooter />
-            <Toaster position="top-center" richColors />
-          </SocketProvider>
+          <LandingNavbar />
+          {children}
+          <LandingFooter />
+          <Toaster position="top-center" richColors />
         </ThemeProvider>
       </body>
     </html>

@@ -296,8 +296,8 @@ export default function TestingPage() {
     w.calendar_year,
     w.calendar_type,
   ]);
-  const BACKEND_URL = process.env.NEXT_PUBLIC_AUTH_BASE_URL;
-  const displayUrl = `${BACKEND_URL}/api/${buildSlug}`;
+  const AUTH_BASE_URL = process.env.NEXT_PUBLIC_NEXT_JS_API_URL;
+  const displayUrl = `${AUTH_BASE_URL}/api/${buildSlug}`;
 
   const params = useMemo(() => {
     const p: Record<string, string> = { api_key: apiKey };

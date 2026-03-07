@@ -5,7 +5,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_URL = process.env.AUTH_BASE_URL || "http://localhost:3000";
+const AUTH_BASE_URL = process.env.AUTH_BASE_URL || "http://localhost:3000";
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
     // Call the backend refresh endpoint
     const backendRes = await fetch(
-      `${BACKEND_URL}/api/auth.web/refresh-token`,
+      `${AUTH_BASE_URL}/api/auth.web/refresh-token`,
       {
         method: "POST",
         headers: {

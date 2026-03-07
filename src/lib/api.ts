@@ -2,16 +2,33 @@ import axios from "axios";
 import { getAuthToken } from "@/src/lib/auth";
 
 const api = axios.create({
-  baseURL: process.env.AUTH_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_AUTH_BASE_URL || "http://localhost:3000",
   headers: { "Content-Type": "application/json" },
 });
 
-// Attach auth token to every request
+// Attach auth token and API key to every request
 api.interceptors.request.use((config) => {
   const token = getAuthToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
+  // Get API key from user object in localStorage
+  if (typeof window !== "undefined") {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        const apiKey = user.userApiKey || user.apikey;
+        if (apiKey) {
+          config.headers["X-API-KEY"] = apiKey;
+        }
+      } catch (e) {
+        console.error("Error parsing user for API key:", e);
+      }
+    }
+  }
+
   return config;
 });
 

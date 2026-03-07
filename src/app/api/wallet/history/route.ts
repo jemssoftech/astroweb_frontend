@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_URL = process.env.AUTH_BASE_URL || "http://localhost:3000";
+const AUTH_BASE_URL = process.env.AUTH_BASE_URL || "http://localhost:3000";
 
 export async function GET(req: NextRequest) {
   try {
@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     const limit = url.searchParams.get("limit") || "20";
 
     const backendRes = await fetch(
-      `${BACKEND_URL}/api/wallet/history?page=${page}&limit=${limit}`,
+      `${AUTH_BASE_URL}/api/wallet/history?page=${page}&limit=${limit}`,
       {
         method: "GET",
         headers: {

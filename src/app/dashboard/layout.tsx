@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Sidebar from "@/src/components/dashboard/Sidebar";
 import { getAuthToken, getUser, logout } from "@/src/lib/auth";
-import { useSocket } from "@/src/context/SocketContext";
 import DashboardNavbar from "@/src/components/dashboard/DashboardNavbar";
 
 export default function DashboardLayout({
@@ -13,7 +12,6 @@ export default function DashboardLayout({
 }>) {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { socket, isConnected } = useSocket();
 
   useEffect(() => {
     const verifyAuth = async () => {
@@ -40,56 +38,30 @@ export default function DashboardLayout({
     router.push("/login");
   }, [router]);
 
-  // Socket: Token Verification
+  // API: Token Verification
   useEffect(() => {
-    // Only attempt verification if authenticated via basic checks and connected to socket
-    if (isAuthenticated && isConnected && socket) {
+    if (isAuthenticated) {
       const token = getAuthToken();
       if (token) {
-        // Emit verification event
-        // Backend could respond via acknowledgment callback
-        socket.emit(
-          "verify-access-token",
-          { token },
-          (response: { valid?: boolean }) => {
-            if (response && response.valid === false) {
-              handleInvalidToken();
-            }
-          },
-        );
-
-        // Or backend could emit 'token-invalid' / 'access-token-invalid'
-        const onTokenInvalid = () => {
-          handleInvalidToken();
-        };
-
-        const onTokenResponse = (response: {
-          valid?: boolean;
-          status?: number;
-          message?: string;
-        }) => {
-          if (
-            response &&
-            (response.valid === false ||
-              response.status === 401 ||
-              response.message === "Invalid token")
-          ) {
-            handleInvalidToken();
-          }
-        };
-
-        socket.on("token-invalid", onTokenInvalid);
-        socket.on("access-token-invalid", onTokenInvalid);
-        socket.on("verify-access-token-response", onTokenResponse);
-
-        return () => {
-          socket.off("token-invalid", onTokenInvalid);
-          socket.off("access-token-invalid", onTokenInvalid);
-          socket.off("verify-access-token-response", onTokenResponse);
-        };
+        import("@/src/lib/api").then(({ default: api }) => {
+          api
+            .post("/api/auth.web/verify-token", { token })
+            .then((res) => {
+              if (res.data && res.data.valid === false) {
+                handleInvalidToken();
+              }
+            })
+            .catch((err) => {
+              console.error("Token verification failed:", err);
+              // Optional: handle failed verification (e.g., 401)
+              if (err.response?.status === 401) {
+                handleInvalidToken();
+              }
+            });
+        });
       }
     }
-  }, [isAuthenticated, isConnected, socket, handleInvalidToken]);
+  }, [isAuthenticated, handleInvalidToken]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_URL = process.env.AUTH_BASE_URL || "http://localhost:3000";
+const AUTH_BASE_URL = process.env.AUTH_BASE_URL || "http://localhost:3000";
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,14 +18,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const backendRes = await fetch(`${BACKEND_URL}/api/razorpay/create-order`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+    const backendRes = await fetch(
+      `${AUTH_BASE_URL}/api/razorpay/create-order`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
       },
-      body: JSON.stringify(body),
-    });
+    );
 
     const data = await backendRes.json();
 

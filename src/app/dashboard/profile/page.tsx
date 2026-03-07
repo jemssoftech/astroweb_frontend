@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import Iconify from "@/src/components/Iconify";
 import { getAuthToken, getUser } from "@/src/lib/auth";
-import { useSocket } from "@/src/context/SocketContext";
+import api from "@/src/lib/api";
 
 interface UserProfile {
   id?: string;
@@ -11,10 +11,14 @@ interface UserProfile {
   email?: string;
   phone?: string;
   wallet_balance?: number;
-  plan?: string;
-  created_at?: string;
-  allowedDomains?: string[];
-  [key: string]: any;
+  allowedDomains?: string[] | string;
+  apiKey?: string;
+  api_key?: string;
+  name?: string;
+  mobileNumber?: string;
+  remainingBalanceRupees?: number;
+  wallet?: number;
+  [key: string]: unknown;
 }
 
 interface EditFormData {
@@ -25,7 +29,6 @@ interface EditFormData {
 }
 
 export default function ProfilePage() {
-  const { socket, isConnected } = useSocket();
   const token = getAuthToken();
   const localUser = getUser();
 
@@ -59,7 +62,7 @@ export default function ProfilePage() {
 
   // Copy API key to clipboard
   const handleCopyApiKey = useCallback(() => {
-    const apiKey = profile?.apiKey || profile?.api_key;
+    const apiKey = (profile?.apiKey || profile?.api_key) as string;
     if (!apiKey) return;
     navigator.clipboard.writeText(apiKey).then(() => {
       setCopied(true);
@@ -67,75 +70,49 @@ export default function ProfilePage() {
     });
   }, [profile]);
 
-  // Refresh / regenerate API key via socket
-  const handleRefreshApiKey = useCallback(() => {
-    if (!socket || !isConnected || !token) return;
+  // Refresh / regenerate API key via API
+  const handleRefreshApiKey = useCallback(async () => {
+    if (!token) return;
     setRefreshingKey(true);
 
-    const handleRefreshResponse = (response: unknown) => {
-      // Changed from any to unknown
-      console.log("Received refresh-api-key-response:", response);
-      clearTimeout(timeoutId);
-      socket.off("refresh-api-key-response", handleRefreshResponse);
-      setRefreshingKey(false);
+    try {
+      const response = await api.post("/api/api-key-refresh");
+      const data = response.data;
+      console.log("Received refresh response:", data);
 
-      if (
-        response &&
-        typeof response === "object" &&
-        !("error" in response && response.error)
-      ) {
+      if (data && !data.error) {
         const newKey =
-          ("apiKey" in response && (response.apiKey as string)) ||
-          ("api_key" in response && (response.api_key as string)) ||
-          ("data" in response &&
-            typeof response.data === "object" &&
-            response.data &&
-            "apiKey" in response.data &&
-            (response.data.apiKey as string)) ||
-          ("data" in response &&
-            typeof response.data === "object" &&
-            response.data &&
-            "api_key" in response.data &&
-            (response.data.api_key as string));
+          data.apiKey ||
+          data.api_key ||
+          (data.data && (data.data.apiKey || data.data.api_key));
         if (newKey && profile) {
           setProfile({ ...profile, apiKey: newKey });
         }
         setEditFeedback({
           type: "success",
-          message:
-            ("message" in response && (response.message as string)) ||
-            "API key refreshed successfully!",
+          message: data.message || "API key refreshed successfully!",
         });
         setTimeout(() => setEditFeedback(null), 4000);
       } else {
         setEditFeedback({
           type: "error",
-          message:
-            (typeof response === "object" &&
-              response &&
-              "message" in response &&
-              (response.message as string)) ||
-            (typeof response === "object" &&
-              response &&
-              "error" in response &&
-              (response.error as string)) ||
-            "Failed to refresh API key",
+          message: data.message || data.error || "Failed to refresh API key",
         });
       }
-    };
-
-    socket.on("refresh-api-key-response", handleRefreshResponse);
-    socket.emit("refresh-api-key", { token });
-
-    const timeoutId = setTimeout(() => {
-      socket.off("refresh-api-key-response", handleRefreshResponse);
-      setRefreshingKey(false);
+    } catch (err: unknown) {
+      console.error("Refresh API Key Error:", err);
+      const error = err as any;
       setEditFeedback({
         type: "error",
-        message: "Refresh request timed out. Please try again.",
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Failed to refresh API key",
       });
-    }, 10000);
-  }, [socket, isConnected, token, profile]);
+    } finally {
+      setRefreshingKey(false);
+    }
+  }, [token, profile]);
 
   // Start editing – populate form with current profile data
   const handleStartEdit = useCallback(() => {
@@ -189,46 +166,28 @@ export default function ProfilePage() {
     setEditFeedback(null);
   }, []);
 
-  // Save profile via socket
-  const handleSaveProfile = useCallback(() => {
-    if (!socket || !isConnected || !token) return;
+  // Save profile via API
+  const handleSaveProfile = useCallback(async () => {
+    if (!token) return;
     setSaving(true);
     setEditFeedback(null);
 
-    // Send token as both `token` and `accessToken` to match backend expectations
-    const payload = { token, accessToken: token, ...editForm };
-    console.log("Emitting edit-profile", payload);
+    try {
+      // Use profile.id if available, otherwise fallback
+      const userId = profile?.id;
+      const response = await api.put(`/api/auth.web/user/${userId}`, editForm);
+      const data = response.data;
+      console.log("Received edit response:", data);
 
-    // One-shot listener: register before emit, remove after response
-    const handleEditResponse = (response: unknown) => {
-      // Changed from any to unknown
-      console.log("Received edit-profile-response:", response);
-      clearTimeout(timeoutId);
-      socket.off("edit-profile-response", handleEditResponse);
-      setSaving(false);
-
-      if (
-        response &&
-        typeof response === "object" &&
-        !("valid" in response && response.valid === false) &&
-        !("error" in response && response.error)
-      ) {
-        // Update profile with returned data
+      if (data && !data.error && data.valid !== false) {
         let updatedUser: UserProfile | undefined;
-        if (
-          "data" in response &&
-          typeof response.data === "object" &&
-          response.data &&
-          "user" in response.data &&
-          typeof response.data.user === "object"
-        ) {
-          updatedUser = response.data.user as UserProfile;
-        } else if ("user" in response && typeof response.user === "object") {
-          updatedUser = response.user as UserProfile;
-        } else if ("data" in response && typeof response.data === "object") {
-          updatedUser = response.data as UserProfile;
+        if (data.data?.user) {
+          updatedUser = data.data.user;
+        } else if (data.user) {
+          updatedUser = data.user;
+        } else if (data.data) {
+          updatedUser = data.data;
         } else {
-          // Fallback: apply form values locally
           updatedUser = { ...profile, ...editForm };
         }
 
@@ -236,55 +195,32 @@ export default function ProfilePage() {
         setIsEditing(false);
         setEditFeedback({
           type: "success",
-          message:
-            ("message" in response && (response.message as string)) ||
-            "Profile updated successfully!",
+          message: data.message || "Profile updated successfully!",
         });
-
-        // Auto-hide success message after 4 seconds
         setTimeout(() => setEditFeedback(null), 4000);
       } else {
         setEditFeedback({
           type: "error",
-          message:
-            (typeof response === "object" &&
-              response &&
-              "message" in response &&
-              (response.message as string)) ||
-            (typeof response === "object" &&
-              response &&
-              "error" in response &&
-              (response.error as string)) ||
-            "Failed to update profile",
+          message: data.message || data.error || "Failed to update profile",
         });
       }
-    };
-
-    socket.on("edit-profile-response", handleEditResponse);
-    socket.emit("edit-profile", payload);
-
-    // Timeout fallback — stop loading after 10 seconds
-    const timeoutId = setTimeout(() => {
-      console.log("edit-profile-response timed out");
-      socket.off("edit-profile-response", handleEditResponse);
-      setSaving(false);
+    } catch (err: unknown) {
+      console.error("Save Profile Error:", err);
+      const error = err as any;
       setEditFeedback({
         type: "error",
-        message: "Request timed out. Please try again.",
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Failed to update profile",
       });
-    }, 10000);
-  }, [socket, isConnected, token, editForm, profile]);
-
-  // Fetch profile on mount / when socket becomes ready
-  useEffect(() => {
-    if (!socket || !isConnected) {
-      // Socket not ready — show local user if available
-      if (localUser && !profile) {
-        setProfile(localUser);
-      }
-      return;
+    } finally {
+      setSaving(false);
     }
+  }, [token, editForm, profile]);
 
+  // Fetch profile on mount
+  useEffect(() => {
     if (!token) {
       setLoading(false);
       if (localUser) {
@@ -295,67 +231,48 @@ export default function ProfilePage() {
       return;
     }
 
-    // Fetch from server
+    // Fetch from server via API
     setLoading(true);
     setError(null);
 
-    const handleProfileResponse = (response: {
-      valid?: boolean;
-      error?: string;
-      message?: string;
-      user?: UserProfile;
-      data?: UserProfile;
-      [key: string]: unknown;
-    }) => {
-      console.log("Received get-profile-response:", response);
-      clearTimeout(timeoutId);
-      socket.off("get-profile-response", handleProfileResponse);
-      setLoading(false);
+    api
+      .get("/api/auth.web/me")
+      .then((res) => {
+        const response = res.data;
+        console.log("Received profile response:", response);
+        setLoading(false);
 
-      if (response && response.valid !== false && !response.error) {
-        let userData;
-        if (response.data && response.data.user) {
-          userData = response.data.user;
-        } else if (response.user) {
-          userData = response.user;
+        if (response && response.valid !== false && !response.error) {
+          let userData;
+          if (response.data && response.data.user) {
+            userData = response.data.user;
+          } else if (response.user) {
+            userData = response.user;
+          } else {
+            userData = response.data || response;
+          }
+
+          console.log("Setting Profile Data:", userData);
+          setProfile(userData as UserProfile);
         } else {
-          userData = response.data || response;
+          console.log("Profile Error:", response);
+          setError(
+            response?.message || response?.error || "Failed to load profile",
+          );
+          if (localUser) setProfile(localUser);
         }
-
-        console.log("Setting Profile Data:", userData);
-        setProfile(userData as UserProfile);
-      } else {
-        console.log("Profile Error:", response);
+      })
+      .catch((err) => {
+        console.error("Profile Fetch Error:", err);
+        setLoading(false);
         setError(
-          (response?.message as string) ||
-            (response?.error as string) ||
+          err.response?.data?.message ||
+            err.message ||
             "Failed to load profile",
         );
         if (localUser) setProfile(localUser);
-      }
-    };
-
-    socket.on("get-profile-response", handleProfileResponse);
-    console.log("Emitting get-profile with token");
-    socket.emit("get-profile", { token });
-
-    // Timeout fallback
-    const timeoutId = setTimeout(() => {
-      socket.off("get-profile-response", handleProfileResponse);
-      setLoading(false);
-      if (localUser) {
-        setProfile(localUser);
-      } else {
-        setError("Profile request timed out");
-      }
-    }, 10000);
-
-    return () => {
-      clearTimeout(timeoutId);
-      socket.off("get-profile-response", handleProfileResponse);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socket, isConnected, token]);
+      });
+  }, [token, localUser]);
   return (
     <div className="flex-1 w-full transition-colors duration-300">
       {/* Animated Background Elements */}
@@ -559,7 +476,8 @@ export default function ProfilePage() {
                 <div className="p-4 bg-slate-900 rounded-xl border border-slate-700 flex items-center gap-3">
                   <code className="flex-1 text-sm font-mono text-emerald-400 truncate select-all">
                     {(() => {
-                      const apiKey = profile.apikey || profile.api_key;
+                      const apiKey = (profile.apiKey ||
+                        profile.api_key) as string;
                       if (!apiKey)
                         return (
                           <span className="text-slate-500 italic">

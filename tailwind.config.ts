@@ -15,8 +15,10 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        primary: "#0b5ed7",
-        secondary: "#6c757d",
+        card: "var(--card)",
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
+        muted: "var(--muted)",
         accent: "var(--accent)",
         border: "var(--border)",
         input: "var(--input)",

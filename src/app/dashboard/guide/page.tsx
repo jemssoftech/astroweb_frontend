@@ -4,7 +4,7 @@ import Iconify from "@/src/components/Iconify";
 
 export default function GuidePage() {
   const backendUrl =
-    process.env.NEXT_PUBLIC_AUTH_BASE_URL || "https://api.astroweb.in";
+    process.env.NEXT_PUBLIC_NEXT_JS_API_URL || "https://api.astroweb.in";
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-12">
@@ -36,7 +36,7 @@ export default function GuidePage() {
               <strong>Backend URL</strong>.
             </p>
             <div className="bg-slate-900 rounded-xl p-4 font-mono text-sm text-blue-400 overflow-x-auto">
-              NEXT_PUBLIC_AUTH_BASE_URL={backendUrl}
+              NEXT_PUBLIC_NEXT_JS_API_URL={backendUrl}
             </div>
           </div>
 
@@ -136,7 +136,8 @@ export default function GuidePage() {
             <span className="text-purple-400">await</span>{" "}
             <span className="text-yellow-400">fetch</span>(
             <span className="text-emerald-400">
-              `{"${"}process.env.NEXT_PUBLIC_AUTH_BASE_URL{"}"}/api/ashtakvarga`
+              `{"${"}process.env.NEXT_PUBLIC_NEXT_JS_API_URL{"}"}
+              /api/ashtakvarga`
             </span>
             , {"{"}
             <br />

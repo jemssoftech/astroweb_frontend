@@ -38,7 +38,8 @@ export default function LandingNavbar() {
   if (
     pathname === "/login" ||
     pathname === "/register" ||
-    pathname?.includes("/dashboard")
+    pathname?.includes("/dashboard") ||
+    pathname?.includes("/playground")
   ) {
     return null;
   }

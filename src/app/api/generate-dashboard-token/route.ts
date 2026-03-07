@@ -4,7 +4,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-const BACKEND_URL = process.env.AUTH_BASE_URL || "http://localhost:3000";
+const AUTH_BASE_URL = process.env.AUTH_BASE_URL || "http://localhost:3000";
 
 export async function POST() {
   try {
@@ -21,7 +21,7 @@ export async function POST() {
     // If accessToken is missing but refreshToken exists, silently refresh first
     if (!accessToken && refreshToken) {
       const backendRes = await fetch(
-        `${BACKEND_URL}/api/auth.web/refresh-token`,
+        `${AUTH_BASE_URL}/api/auth.web/refresh-token`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -37,7 +37,7 @@ export async function POST() {
       }
 
       const data = await backendRes.json();
-   
+
       accessToken = data.accessToken || data.access_token;
 
       if (!accessToken) {
